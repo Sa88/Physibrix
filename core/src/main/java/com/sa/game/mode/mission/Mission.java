@@ -1,12 +1,32 @@
 package com.sa.game.mode.mission;
-public class Mission {
-    String description = "Construa uma torre de pelo menos 10m que resista ao vento";
-    float minHeight = 10f;
-    boolean requireStability = true;
+import com.sa.game.mode.mission.goals.MissionGoal;
 
-    float structureHeight = 10f;
+import java.util.List;
+public class Mission {
+    private final String name;
+    private final String description;
+    private final List<MissionGoal> goals;
+
+    public Mission(String name, String description, List<MissionGoal> goals) {
+        this.name = name;
+        this.description = description;
+        this.goals = goals;
+    }
 
     public boolean isCompleted() {
-        return structureHeight >= minHeight && requireStability;
+        for (MissionGoal goal : goals) {
+            if (!goal.isGoalReached()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

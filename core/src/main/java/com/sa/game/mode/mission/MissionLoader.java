@@ -3,21 +3,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.sa.game.World;
-import com.sa.game.mode.mission.goal.*;
+import com.sa.game.mode.mission.goals.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MissionLoader {
 
-    public static List<GenericMission> loadMissions(World world) {
+    public static List<Mission> loadMissions(World world) {
         Json json = new Json();
         Array<MissionData> missionDataArray = json.fromJson(Array.class, MissionData.class, Gdx.files.internal("missions/missions.json"));
 
-        List<GenericMission> missions = new ArrayList<>();
+        List<Mission> missions = new ArrayList<>();
         for (MissionData data : missionDataArray) {
             List<MissionGoal> goals = createGoalsFromData(world, data.goals);
-            missions.add(new GenericMission(data.name, data.description, goals));
+            missions.add(new Mission(data.name, data.description, goals));
         }
         return missions;
     }

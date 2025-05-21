@@ -2,14 +2,14 @@ package com.sa.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.input.GestureDetector;
 import com.sa.game.camera.CameraControlUI;
 import com.sa.game.camera.CameraGestureListener;
 import com.sa.game.mode.GameModeType;
 import com.sa.game.ui.UI;
 
-public class GameplayScreen implements Screen {
+public class GameplayScreen extends ScreenAdapter {
 
     private final Main game;
     private final GameModeType modeType;

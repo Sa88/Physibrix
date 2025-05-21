@@ -133,12 +133,12 @@ public class World implements GameCommandListener, Disposable {
             if (otherBlock != block && WorldUtils.areAdjacent(block, otherBlock)) {
 
 
-                boolean conectado = physicsSystem.connectIfTouching(block, otherBlock);
+/*                boolean conectado = physicsSystem.connectIfTouching(block, otherBlock);
                 if (conectado) {
                     System.out.println("Blocos conectados com sucesso.");
                 } else {
                     System.out.println("Nenhum contato encontrado entre os blocos.");
-                }
+                }*/
                 stabilityMonitor.registerConnection(block, otherBlock); // força máxima segura
             }
         }

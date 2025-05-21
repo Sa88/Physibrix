@@ -28,7 +28,7 @@ public class GameModeUI {
         rootTable.pad(20);
 
         // Título
-        Label title = new Label("Modo de Jogo:", skin, "bigFont", Color.BLACK);
+        Label title = new Label("Game Mode:", skin, "bigFont", Color.BLACK);
         rootTable.add(title).colspan(2).padBottom(16).row();
 
         // Criar um estilo customizado para a SelectBox

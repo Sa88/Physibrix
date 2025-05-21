@@ -1,4 +1,4 @@
-package com.sa.game.mode.mission.goal;
+package com.sa.game.mode.mission.goals;
 import com.sa.game.World;
 public class WindResistanceGoal implements MissionGoal {
 

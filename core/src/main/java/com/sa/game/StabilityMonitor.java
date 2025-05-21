@@ -23,14 +23,14 @@ public class StabilityMonitor implements Disposable {
         LOW, MEDIUM, HIGH
     }
 
-    public static class StabilityData {
-        public Block blockA;
-        public Block blockB;
-        public float currentForce;     // Impulso atual (não suavizado)
-        public float smoothedForce;    // Força suavizada para evitar variações abruptas
-        public float maxSafeForce;
-        public RiskLevel riskLevel;
-        public float timeAtHighRisk = 0f; // Acumulador de tempo para risco alto
+    static class StabilityData {
+        Block blockA;
+        Block blockB;
+        float currentForce;     // Impulso atual (não suavizado)
+        float smoothedForce;    // Força suavizada para evitar variações abruptas
+        float maxSafeForce;
+        RiskLevel riskLevel;
+        float timeAtHighRisk = 0f; // Acumulador de tempo para risco alto
     }
 
     private final List<StabilityData> monitoredJoints = new ArrayList<>();
@@ -42,7 +42,8 @@ public class StabilityMonitor implements Disposable {
         float area = PhysicsProperties.getContactArea(blockA, blockB); // m²
         float strength = PhysicsProperties.getCompressiveStrength(material); // N/m²
 
-        float maxSafeForce = area * strength; // N (newtons)
+        float safetyFactor = 10000f;
+        float maxSafeForce = (area * strength) / safetyFactor; // N (newtons) / 10000
 
         StabilityData data = new StabilityData();
         data.blockA = blockA;
@@ -81,10 +82,6 @@ public class StabilityMonitor implements Disposable {
             // Aplica interpolação exponencial para suavizar as variações
             float alpha = 1.0f - (float)Math.exp(-5 * deltaTime); // fator de suavização
             data.smoothedForce += alpha * (data.currentForce - data.smoothedForce);
-
-            System.out.println("data.currentForce:" + data.currentForce);
-            System.out.println("data.smoothedForce:" + data.smoothedForce);
-            System.out.println("data.maxSafeForce:" + data.maxSafeForce);
 
             data.riskLevel = calculateRisk(data.smoothedForce, data.maxSafeForce);
 
@@ -128,10 +125,6 @@ public class StabilityMonitor implements Disposable {
     private void applyVibrationEffect(Block block) {
         float vibration = MathUtils.sin(TimeUtils.millis() / 30f) * 0.05f;
         block.modelInstance.transform.translate(0, vibration, 0);
-    }
-
-    public List<StabilityData> getData() {
-        return monitoredJoints;
     }
 
     @Override

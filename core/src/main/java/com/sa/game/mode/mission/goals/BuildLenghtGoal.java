@@ -1,4 +1,4 @@
-package com.sa.game.mode.mission.goal;
+package com.sa.game.mode.mission.goals;
 import com.sa.game.World;
 import com.sa.game.WorldUtils;
 public class BuildLenghtGoal implements MissionGoal {
