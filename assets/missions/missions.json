@@ -1,0 +1,36 @@
+[
+  {
+    "id": "tower_building",
+    "name": "Construa uma Torre",
+    "description": "Construa uma torre com pelo menos 10 blocos de altura.",
+    "goals" : [
+      {
+        "type": "height",
+        "value": 20
+      }
+    ]
+  },
+  {
+    "id": "long_bridge",
+    "name": "Construa uma Ponte",
+    "description": "Construa uma ponte com 20 blocos de comprimento.",
+    "goals" : [
+      {
+        "type": "length",
+        "value": 20
+      }
+    ]
+  },
+  {
+    "id": "resist_wind",
+    "name": "Resista ao Vento",
+    "description": "Construa uma estrutura que resista a ventos de 50km/h durante 10 segundos.",
+    "goals" : [
+      {
+        "type": "wind_resistance",
+        "value": 50,
+        "duration": 10
+      }
+    ]
+  }
+]
