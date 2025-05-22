@@ -19,7 +19,7 @@ public class CreativeMode implements GameMode {
 
     @Override
     public boolean isPhysicsEnabled() {
-        return false; // Física opcional, pode mudar por configuração
+        return true; // Física opcional, pode mudar por configuração
     }
 
     @Override

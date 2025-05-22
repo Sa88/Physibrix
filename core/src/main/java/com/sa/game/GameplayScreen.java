@@ -6,13 +6,13 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.input.GestureDetector;
 import com.sa.game.camera.CameraControlUI;
 import com.sa.game.camera.CameraGestureListener;
-import com.sa.game.mode.GameModeType;
+import com.sa.game.mode.mission.Mission;
 import com.sa.game.ui.UI;
 
 public class GameplayScreen extends ScreenAdapter {
 
     private final Main game;
-    private final GameModeType modeType;
+    private Mission mission;
 
     private World world;
     private UI ui;
@@ -21,9 +21,13 @@ public class GameplayScreen extends ScreenAdapter {
 
     private CameraGestureListener gestureListener;
 
-    public GameplayScreen(Main game, GameModeType modeType) {
+    public GameplayScreen(Main game) {
         this.game = game;
-        this.modeType = modeType;
+    }
+
+    public GameplayScreen(Main game, Mission mission) {
+        this.game = game;
+        this.mission = mission;
     }
 
     @Override

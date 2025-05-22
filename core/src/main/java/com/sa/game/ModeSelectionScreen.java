@@ -11,18 +11,17 @@ import com.sa.game.assets.Assets;
 import com.sa.game.mode.GameModeManager;
 import com.sa.game.mode.GameModeType;
 import com.sa.game.mode.GameModeUI;
+import com.sa.game.mode.mission.MissionSelectScreen;
 import com.sa.game.ui.FontFactory;
 public class ModeSelectionScreen extends ScreenAdapter {
 
-    private Stage stage;
-    private Skin skin;
+    private final Stage stage;
+    private final Skin skin;
 
-    private final Main game;
-    private GameModeManager gameModeManager;
+    private final GameModeManager gameModeManager;
     private final SpriteBatch spriteBatch;
 
     public ModeSelectionScreen(Main game) {
-        this.game = game;
 
         spriteBatch = new SpriteBatch();
 
@@ -45,7 +44,14 @@ public class ModeSelectionScreen extends ScreenAdapter {
         // Quando o botão for clicado, troca para o GameplayScreen
         gameModeUI.setStartButtonListener(() -> {
             GameModeType selectedMode = gameModeUI.getSelectedMode();
-            game.setScreen(new GameplayScreen(game, selectedMode));
+            switch (selectedMode) {
+                case CREATIVE: game.setScreen(new GameplayScreen(game));
+                    break;
+                case MISSION: game.setScreen(new MissionSelectScreen(game, gameModeManager.getCurrentMode(), skin));
+                    break;
+                case SURVIVAL: game.setScreen(new GameplayScreen(game));
+                break;
+            }
         });
     }
 
