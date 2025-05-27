@@ -1,4 +1,4 @@
-package com.sa.game;
+package com.sa.game.blocks;
 import com.badlogic.gdx.math.Vector3;
 public class BlockDimensions {
     public static Vector3 getHalfExtents(BlockType type) {

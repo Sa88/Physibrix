@@ -1,4 +1,4 @@
-package com.sa.game;
+package com.sa.game.blocks;
 public enum BlockShapeType {
     BOX,
     CONE,

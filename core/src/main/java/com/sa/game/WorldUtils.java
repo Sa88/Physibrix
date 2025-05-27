@@ -2,11 +2,13 @@ package com.sa.game;
 
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.sa.game.blocks.Block;
+import com.sa.game.blocks.BlockType;
 import com.sa.game.grid.GridUtils;
 public class WorldUtils {
 
     public static float getMaxBlockHeight(World world) {
-        return world.blocks.stream().map(b -> b.boundingBox.getHeight()).max(Float::compareTo).orElse(0f);
+        return world.getBlockManager().getBlocks().stream().map(b -> b.boundingBox.getHeight()).max(Float::compareTo).orElse(0f);
     }
 
     public static Vector3 getSnappedWorldCoordinates(World world, int screenX, int screenY, BlockType blockType) {
@@ -37,7 +39,7 @@ public class WorldUtils {
 
     public static float getHeightAt(World world, float x, float z, Block tempBlock) {
 
-        return (float) world.blocks.stream()
+        return (float) world.getBlockManager().getBlocks().stream()
             .filter(b -> {
 
                 // Pega a posição central do bloco
@@ -58,7 +60,7 @@ public class WorldUtils {
 
     public static float getHeightAt(World world, float x, float z) {
 
-        return (float) world.blocks.stream()
+        return (float) world.getBlockManager().getBlocks().stream()
             .filter(b -> {
 
                 // Pega a posição central do bloco

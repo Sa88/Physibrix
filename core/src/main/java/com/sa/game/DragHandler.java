@@ -4,12 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.sa.game.blocks.Block;
+import com.sa.game.blocks.BlockDimensions;
+import com.sa.game.blocks.BlockShapeType;
+import com.sa.game.blocks.BlockType;
 
-import static com.sa.game.BlockShapeType.BOX;
-import static com.sa.game.BlockType.BASE;
+import static com.sa.game.blocks.BlockShapeType.BOX;
+import static com.sa.game.blocks.BlockType.BASE;
 import static com.sa.game.MaterialType.CONCRETE;
 
 public class DragHandler extends InputAdapter implements BlockSelectionListener {
@@ -22,9 +25,6 @@ public class DragHandler extends InputAdapter implements BlockSelectionListener 
     private BlockType currentBlockType = BASE;
 
     private BlockShapeType currentShapeType = BOX;
-
-    private static final ColorAttribute RED = ColorAttribute.createDiffuse(1f, 0f, 0f, 1f);
-    private static final ColorAttribute GREEN = ColorAttribute.createDiffuse(0f, 1f, 0f, 1f);
 
     private Stage uiStage;
 
@@ -72,7 +72,7 @@ public class DragHandler extends InputAdapter implements BlockSelectionListener 
         currentMaterial = material;
         currentBlockType = blockType;
         currentShapeType = shapeType;
-        tempBlock = world.createBlock(new Vector3(), material, currentBlockType, currentShapeType);
+        tempBlock = world.getBlockManager().createBlock(new Vector3(), material, currentBlockType, currentShapeType);
         world.getGridRenderer().setBuildMode(true);
     }
 

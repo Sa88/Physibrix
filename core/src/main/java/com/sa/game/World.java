@@ -9,30 +9,29 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
-import com.badlogic.gdx.physics.bullet.dynamics.btFixedConstraint;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
 import com.badlogic.gdx.utils.Disposable;
 import com.sa.game.assets.Assets;
+import com.sa.game.blocks.Block;
+import com.sa.game.blocks.BlockManager;
+import com.sa.game.blocks.BlockShapeType;
+import com.sa.game.blocks.BlockType;
 import com.sa.game.camera.CameraController;
 import com.sa.game.grid.GridRenderer;
-import com.sa.game.physics.PhysicsProperties;
 import com.sa.game.physics.PhysicsSystem;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class World implements GameCommandListener, Disposable {
     private CameraController cameraController;
     private ModelBatch modelBatch;
     private Environment environment;
-    protected ArrayList<Block> blocks;
     private Model baseModel;
     private btRigidBody baseBody;
     private ModelInstance baseInstance;
@@ -48,6 +47,8 @@ public class World implements GameCommandListener, Disposable {
 
     private PhysicsSystem physicsSystem;
 
+    private BlockManager blockManager;
+
     public World() {
         modelBatch = new ModelBatch();
         environment = new Environment();
@@ -60,7 +61,7 @@ public class World implements GameCommandListener, Disposable {
 
         physicsSystem = new PhysicsSystem();
 
-        blocks = new ArrayList<>();
+        blockManager = new BlockManager();
 
         createBase();
 
@@ -71,6 +72,10 @@ public class World implements GameCommandListener, Disposable {
 
         warningBatch = new SpriteBatch();
 
+    }
+
+    public BlockManager getBlockManager() {
+        return blockManager;
     }
 
     private void createBase() {
@@ -88,48 +93,15 @@ public class World implements GameCommandListener, Disposable {
         physicsSystem.addRigidBody(baseBody);
     }
 
-    public Block createBlock(Vector3 position, MaterialType currentMaterial, BlockType currentBlockType, BlockShapeType currentShapeType) {
-
-        Model model = ModelFactory.createBlockModel(currentMaterial, currentBlockType, currentShapeType);
-        ModelInstance instance = new ModelInstance(model);
-        instance.transform.setToTranslation(position);
-
-        btCollisionShape shape = PhysicsProperties.getShape(currentBlockType, currentShapeType);
-
-        float mass = PhysicsProperties.getMass(currentMaterial);
-
-        // Definir propriedades físicas
-        btDefaultMotionState motionState = new btDefaultMotionState(instance.transform);
-        Vector3 inertia = new Vector3();
-        shape.calculateLocalInertia(mass, inertia);
-
-        btRigidBody.btRigidBodyConstructionInfo bodyInfo = new btRigidBody.btRigidBodyConstructionInfo(mass, motionState, shape, inertia);
-        btRigidBody body = new btRigidBody(bodyInfo);
-        bodyInfo.dispose();
-
-        // Configurar propriedades físicas específicas do material
-        body.setFriction(PhysicsProperties.getFriction(currentMaterial));
-        body.setRestitution(PhysicsProperties.getRestitution(currentMaterial));
-        var damping = PhysicsProperties.getDamping(currentMaterial);
-        body.setDamping(damping, damping);
-
-        // Aplica a posição inicial do bloco no mundo
-        body.proceedToTransform(instance.transform);
-
-        // Criação do bloco
-        return new Block(currentBlockType, currentMaterial, instance, position, body);
-    }
-
     public void addBlock(Vector3 position, MaterialType currentMaterial, BlockType currentBlockType, BlockShapeType currentShapeType) {
 
-        // Criação do bloco
-        Block block = createBlock(position, currentMaterial, currentBlockType, currentShapeType);
-        blocks.add(block);
+        Block block = blockManager.createBlock(position, currentMaterial, currentBlockType, currentShapeType);
+        blockManager.addBlock(block);
 
         // Adicionar o corpo rígido ao mundo físico
         physicsSystem.addRigidBody(block.body);
 
-        for (Block otherBlock : blocks) {
+        for (Block otherBlock : blockManager.getBlocks()) {
             if (otherBlock != block && WorldUtils.areAdjacent(block, otherBlock)) {
 
 
@@ -185,7 +157,7 @@ public class World implements GameCommandListener, Disposable {
 
         dragHandler.update(modelBatch);
 
-        for (Block block : blocks) {
+        for (Block block : blockManager.getBlocks()) {
             if (block.body != null) {
                 block.body.getWorldTransform(block.modelInstance.transform);
                 modelBatch.render(block.modelInstance, environment);
@@ -203,7 +175,7 @@ public class World implements GameCommandListener, Disposable {
             stabilityMonitor.renderWarnings(warningBatch, cameraController.getCamera());
         }
 
-//        physicsSystem.render(cameraController.getCamera());
+        physicsSystem.render(cameraController.getCamera());
 
     }
 
@@ -235,7 +207,7 @@ public class World implements GameCommandListener, Disposable {
             return true;
         }
 
-        for (Block existingBlock : blocks) {
+        for (Block existingBlock : blockManager.getBlocks()) {
             Vector3 existingPos = existingBlock.modelInstance.transform.getTranslation(new Vector3());
             float existingHeight = existingBlock.boundingBox.getHeight();
 
@@ -253,7 +225,7 @@ public class World implements GameCommandListener, Disposable {
     }
 
     private boolean checkCollision(Vector3 position, float newBlockWidth, float newBlockHeight, float newBlockDepth) {
-        for (Block existingBlock : blocks) {
+        for (Block existingBlock : blockManager.getBlocks()) {
             Vector3 existingPos = existingBlock.modelInstance.transform.getTranslation(position);
             float existingHeight = existingBlock.boundingBox.getHeight();
             float existingWidth = existingBlock.boundingBox.getWidth();
@@ -277,11 +249,11 @@ public class World implements GameCommandListener, Disposable {
 
     public void clearBlocks() {
         physicsSystem.removeAllConstraints();
-        for (Block block : blocks) {
+        for (Block block : blockManager.getBlocks()) {
             physicsSystem.removeRigidBody(block.body);
             block.body.dispose();
         }
-        blocks.clear();
+        blockManager.getBlocks().clear();
         stabilityMonitor.dispose();
         ModelFactory.disposeAllModels();
     }
@@ -303,7 +275,7 @@ public class World implements GameCommandListener, Disposable {
     }
 
     public void removeBlockAt(Vector3 position) {
-        Iterator<Block> iterator = blocks.iterator();
+        Iterator<Block> iterator = blockManager.getBlocks().iterator();
 
         while (iterator.hasNext()) {
             Block block = iterator.next();
@@ -333,12 +305,12 @@ public class World implements GameCommandListener, Disposable {
         stabilityMonitor.dispose();
         modelBatch.dispose();
         baseModel.dispose();
-        for (Block block : blocks) {
+        for (Block block : blockManager.getBlocks()) {
             block.modelInstance.model.dispose();
             physicsSystem.removeRigidBody(block.body);
             block.body.dispose();
         }
-        blocks.clear();
+        blockManager.getBlocks().clear();
         physicsSystem.removeRigidBody(baseBody);
         baseBody.dispose();
         physicsSystem.dispose();

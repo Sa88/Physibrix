@@ -1,5 +1,5 @@
 package com.sa.game.mode;
-import com.sa.game.Block;
+import com.sa.game.blocks.Block;
 public class GameModeManager {
 
     private GameMode currentMode;

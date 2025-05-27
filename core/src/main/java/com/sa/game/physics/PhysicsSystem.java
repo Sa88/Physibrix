@@ -18,9 +18,8 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.physics.bullet.dynamics.btTypedConstraint;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
-import com.badlogic.gdx.physics.bullet.linearmath.btTransform;
 import com.badlogic.gdx.utils.Disposable;
-import com.sa.game.Block;
+import com.sa.game.blocks.Block;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,7 @@ public class PhysicsSystem implements Disposable {
 
     private List<btTypedConstraint> constraintList;
 
-//    private DebugDrawer debugDrawer;
+    private DebugDrawer debugDrawer;
 
 
     public PhysicsSystem() {
@@ -46,9 +45,9 @@ public class PhysicsSystem implements Disposable {
         dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfig);
         dynamicsWorld.setGravity(new Vector3(0, -9.8f, 0));
 
-//        debugDrawer = new DebugDrawer();
-//        debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_DrawAabb);
-//        dynamicsWorld.setDebugDrawer(debugDrawer);
+        debugDrawer = new DebugDrawer();
+        debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
+        dynamicsWorld.setDebugDrawer(debugDrawer);
         constraintList = new ArrayList<btTypedConstraint>();
     }
 
@@ -56,11 +55,11 @@ public class PhysicsSystem implements Disposable {
         dynamicsWorld.stepSimulation(delta, 5, 1f / 60f);
     }
 
-/*    public void render(Camera camera) {
+    public void render(Camera camera) {
         debugDrawer.begin(camera);
         dynamicsWorld.debugDrawWorld();
         debugDrawer.end();
-    }*/
+    }
 
     public void addRigidBody(btRigidBody rigidBody) {
         dynamicsWorld.addRigidBody(rigidBody);
@@ -179,6 +178,6 @@ public class PhysicsSystem implements Disposable {
         collisionConfig.dispose();
         dispatcher.dispose();
         solver.dispose();
-//        debugDrawer.dispose();
+        debugDrawer.dispose();
     }
 }

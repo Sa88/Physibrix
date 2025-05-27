@@ -1,11 +1,11 @@
 package com.sa.game.grid;
 import com.badlogic.gdx.math.Vector3;
-import com.sa.game.BlockDimensions;
-import com.sa.game.BlockType;
+import com.sa.game.blocks.BlockDimensions;
+import com.sa.game.blocks.BlockType;
 public class GridUtils {
 
 
-    private static float cellSize = 0.25f;
+    private static final float CELL_SIZE = 0.25f;
 
 
     /**
@@ -15,7 +15,7 @@ public class GridUtils {
         Vector3 halfExtents = BlockDimensions.getHalfExtents(type);
         float fullHeight = halfExtents.y;
 
-        var roundedVector = roundVector(position,cellSize, 0.001f);
+        var roundedVector = roundVector(position,CELL_SIZE, 0.001f);
 
         float snappedY = Math.round(roundedVector.y / fullHeight) * fullHeight + halfExtents.y;
 

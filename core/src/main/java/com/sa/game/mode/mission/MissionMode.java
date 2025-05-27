@@ -1,5 +1,5 @@
 package com.sa.game.mode.mission;
-import com.sa.game.Block;
+import com.sa.game.blocks.Block;
 import com.sa.game.mode.GameMode;
 public class MissionMode implements GameMode {
     private Mission currentMission;

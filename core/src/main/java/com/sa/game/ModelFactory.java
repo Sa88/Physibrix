@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.sa.game.assets.Assets;
+import com.sa.game.blocks.BlockModelKey;
+import com.sa.game.blocks.BlockShapeType;
+import com.sa.game.blocks.BlockType;
 
 import java.util.HashMap;
 import java.util.Map;

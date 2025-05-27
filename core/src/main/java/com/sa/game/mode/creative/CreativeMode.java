@@ -1,5 +1,5 @@
 package com.sa.game.mode.creative;
-import com.sa.game.Block;
+import com.sa.game.blocks.Block;
 import com.sa.game.mode.GameMode;
 public class CreativeMode implements GameMode {
     @Override

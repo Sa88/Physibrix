@@ -4,10 +4,10 @@ import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.badlogic.gdx.physics.bullet.collision.btConeShape;
 import com.badlogic.gdx.physics.bullet.collision.btCylinderShape;
-import com.sa.game.Block;
-import com.sa.game.BlockDimensions;
-import com.sa.game.BlockShapeType;
-import com.sa.game.BlockType;
+import com.sa.game.blocks.Block;
+import com.sa.game.blocks.BlockDimensions;
+import com.sa.game.blocks.BlockShapeType;
+import com.sa.game.blocks.BlockType;
 import com.sa.game.MaterialType;
 public class PhysicsProperties {
 

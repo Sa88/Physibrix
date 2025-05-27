@@ -1,5 +1,5 @@
 package com.sa.game.mode.survival;
-import com.sa.game.Block;
+import com.sa.game.blocks.Block;
 import com.sa.game.mode.GameMode;
 public class SurvivalMode implements GameMode {
 

@@ -1,5 +1,5 @@
 package com.sa.game.mode;
-import com.sa.game.Block;
+import com.sa.game.blocks.Block;
 public interface GameMode {
 
     // Chamado todo frame para atualizações específicas do modo
