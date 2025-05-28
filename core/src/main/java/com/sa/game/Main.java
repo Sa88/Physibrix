@@ -2,6 +2,7 @@ package com.sa.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.physics.bullet.Bullet;
+import com.sa.game.screens.LoadingScreen;
 
 public class Main extends Game {
 

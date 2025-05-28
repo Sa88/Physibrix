@@ -1,4 +1,4 @@
-package com.sa.game.mode.mission;
+package com.sa.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -13,8 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.sa.game.GameplayScreen;
-import com.sa.game.LoadingScreen;
+import com.sa.game.mode.mission.Mission;
+import com.sa.game.mode.mission.MissionLoader;
+import com.sa.game.mode.mission.MissionMode;
 import com.sa.game.Main;
 import com.sa.game.World;
 import com.sa.game.assets.Assets;

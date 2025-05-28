@@ -1,9 +1,12 @@
-package com.sa.game;
+package com.sa.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.input.GestureDetector;
+import com.sa.game.DragHandler;
+import com.sa.game.Main;
+import com.sa.game.World;
 import com.sa.game.camera.CameraControlUI;
 import com.sa.game.camera.CameraGestureListener;
 import com.sa.game.mode.mission.Mission;
