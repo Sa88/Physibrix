@@ -7,7 +7,6 @@ public class BlockDimensions {
             case PILLAR -> new Vector3(0.25f, 1f, 0.25f); // Mais estreito e alto
             case STEP -> new Vector3(1f, 0.25f, 1f);
             case ROOF -> new Vector3(0.5f, 1f, 0.5f);
-            default -> new Vector3(1f, 0.5f, 1f);
         };
     }
 
@@ -17,7 +16,6 @@ public class BlockDimensions {
             case PILLAR -> new Vector3(0.5f, 2f, 0.5f); // Mais estreito e alto
             case STEP -> new Vector3(2f, 0.5f, 2f);
             case ROOF -> new Vector3(1f, 2f, 1f);
-            default -> new Vector3(2f, 1f, 2f);
         };
     }
 }

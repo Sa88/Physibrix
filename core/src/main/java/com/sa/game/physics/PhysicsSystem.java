@@ -78,12 +78,12 @@ public class PhysicsSystem implements Disposable {
     }
 
     public void addConstraint(Block blockA, Block blockB) {
-        btRigidBody bodyA = blockA.body;
-        btRigidBody bodyB = blockB.body;
+        btRigidBody bodyA = blockA.getBody();
+        btRigidBody bodyB = blockB.getBody();
 
         // Obter as transformações globais
-        Matrix4 matrixA = blockA.modelInstance.transform;
-        Matrix4 matrixB = blockB.modelInstance.transform;
+        Matrix4 matrixA = blockA.getModelInstance().transform;
+        Matrix4 matrixB = blockB.getModelInstance().transform;
 
         // Calcular as transformações relativas
         Matrix4 frameInA = new Matrix4().idt(); // Identidade se blocos estiverem alinhados
@@ -99,8 +99,8 @@ public class PhysicsSystem implements Disposable {
     }
 
     public boolean connectIfTouching(Block blockA, Block blockB) {
-        btRigidBody bodyA = blockA.body;
-        btRigidBody bodyB = blockB.body;
+        btRigidBody bodyA = blockA.getBody();
+        btRigidBody bodyB = blockB.getBody();
 
         int numManifolds = dynamicsWorld.getDispatcher().getNumManifolds();
 
@@ -131,8 +131,8 @@ public class PhysicsSystem implements Disposable {
                     point.getPositionWorldOnA(contactPointWorld);
 
                     // Transforma para coordenadas locais dos corpos
-                    Matrix4 invTransformA = new Matrix4(blockA.modelInstance.transform).inv();
-                    Matrix4 invTransformB = new Matrix4(blockB.modelInstance.transform).inv();
+                    Matrix4 invTransformA = new Matrix4(blockA.getModelInstance().transform).inv();
+                    Matrix4 invTransformB = new Matrix4(blockB.getModelInstance().transform).inv();
 
                     Vector3 localA = contactPointWorld.cpy().mul(invTransformA);
                     Vector3 localB = contactPointWorld.cpy().mul(invTransformB);

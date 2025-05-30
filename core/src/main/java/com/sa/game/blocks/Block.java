@@ -11,12 +11,12 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 public class Block {
-    public UUID id;
-    public BlockType blockType;
-    public MaterialType material;
-    public ModelInstance modelInstance;
-    public btRigidBody body;
-    public BoundingBox boundingBox;
+    private UUID id;
+    private BlockType blockType;
+    private MaterialType material;
+    private ModelInstance modelInstance;
+    private btRigidBody body;
+    private BoundingBox boundingBox;
 
     public Block(BlockType blockType, MaterialType material, ModelInstance modelInstance, btRigidBody body) {
         this.id = UUID.randomUUID();
@@ -28,4 +28,5 @@ public class Block {
         this.boundingBox = new BoundingBox();
         this.modelInstance.calculateBoundingBox(this.boundingBox);
     }
+
 }

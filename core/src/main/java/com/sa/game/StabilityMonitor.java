@@ -38,7 +38,7 @@ public class StabilityMonitor implements Disposable {
 
     public void registerConnection(Block blockA, Block blockB) {
 
-        MaterialType material = blockA.material; // ou usar o mais fraco dos dois
+        MaterialType material = blockA.getMaterial(); // ou usar o mais fraco dos dois
 
         float area = PhysicsProperties.getContactArea(blockA, blockB); // m²
         float strength = PhysicsProperties.getCompressiveStrength(material); // N/m²
@@ -68,8 +68,8 @@ public class StabilityMonitor implements Disposable {
                 UUID body0Id = (UUID) manifold.getBody0().userData;
                 UUID body1Id = (UUID) manifold.getBody1().userData;
 
-                if ((body0Id == data.blockA.body.userData && body1Id == data.blockB.body.userData)
-                    || (body0Id == data.blockB.body.userData && body1Id == data.blockA.body.userData)) {
+                if ((body0Id == data.blockA.getBody().userData && body1Id == data.blockB.getBody().userData)
+                    || (body0Id == data.blockB.getBody().userData && body1Id == data.blockA.getBody().userData)) {
 
                     for (int j = 0; j < manifold.getNumContacts(); j++) {
                         btManifoldPoint pt = manifold.getContactPoint(j);
@@ -100,7 +100,7 @@ public class StabilityMonitor implements Disposable {
         batch.begin();
         for (StabilityData data : monitoredJoints) {
             Block block = data.blockA; // usa um dos blocos como referência
-            Vector3 position = new Vector3(block.modelInstance.transform.getTranslation(new Vector3()));
+            Vector3 position = new Vector3(block.getModelInstance().transform.getTranslation(new Vector3()));
             Vector3 screenPos = camera.project(position);
 
             Texture icon;
@@ -125,7 +125,7 @@ public class StabilityMonitor implements Disposable {
 
     private void applyVibrationEffect(Block block) {
         float vibration = MathUtils.sin(TimeUtils.millis() / 30f) * 0.05f;
-        block.modelInstance.transform.translate(0, vibration, 0);
+        block.getModelInstance().transform.translate(0, vibration, 0);
     }
 
     @Override

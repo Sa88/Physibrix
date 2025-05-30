@@ -74,9 +74,6 @@ public class ModeSelectionScreen extends ScreenAdapter {
     @Override public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
-    @Override public void pause() {}
-    @Override public void resume() {}
-    @Override public void hide() {}
     @Override
     public void dispose() {
         spriteBatch.dispose();

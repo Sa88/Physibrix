@@ -98,7 +98,7 @@ public class World implements GameCommandListener, Disposable {
         blockManager.addBlock(block);
 
         // Adicionar o corpo rígido ao mundo físico
-        physicsSystem.addRigidBody(block.body);
+        physicsSystem.addRigidBody(block.getBody());
 
         for (Block otherBlock : blockManager.getBlocks()) {
             if (otherBlock != block && WorldUtils.areAdjacent(block, otherBlock)) {
@@ -157,9 +157,9 @@ public class World implements GameCommandListener, Disposable {
         dragHandler.update(modelBatch);
 
         for (Block block : blockManager.getBlocks()) {
-            if (block.body != null) {
-                block.body.getWorldTransform(block.modelInstance.transform);
-                modelBatch.render(block.modelInstance, environment);
+            if (block.getBody() != null) {
+                block.getBody().getWorldTransform(block.getModelInstance().transform);
+                modelBatch.render(block.getModelInstance(), environment);
             }
         }
 
@@ -181,8 +181,8 @@ public class World implements GameCommandListener, Disposable {
     public void clearBlocks() {
         physicsSystem.removeAllConstraints();
         for (Block block : blockManager.getBlocks()) {
-            physicsSystem.removeRigidBody(block.body);
-            block.body.dispose();
+            physicsSystem.removeRigidBody(block.getBody());
+            block.getBody().dispose();
         }
         blockManager.clearBlocks();
         stabilityMonitor.dispose();
@@ -211,15 +211,15 @@ public class World implements GameCommandListener, Disposable {
         while (iterator.hasNext()) {
             Block block = iterator.next();
             // Verifica se a posição do bloco está suficientemente próxima
-            float width = block.boundingBox.getWidth() / 2;
-            float height = block.boundingBox.getHeight() / 2;
-            float depth = block.boundingBox.getDepth() / 2;
+            float width = block.getBoundingBox().getWidth() / 2;
+            float height = block.getBoundingBox().getHeight() / 2;
+            float depth = block.getBoundingBox().getDepth() / 2;
 
             if (position.x >= width && position.y >= height && position.z >= depth) {
                 // Remove da física
-                if (block.body != null) {
-                    physicsSystem.removeRigidBody(block.body);
-                    block.body.dispose();
+                if (block.getBody() != null) {
+                    physicsSystem.removeRigidBody(block.getBody());
+                    block.getBody().dispose();
                 }
 
                 // Remove da lista
@@ -237,9 +237,9 @@ public class World implements GameCommandListener, Disposable {
         modelBatch.dispose();
         baseModel.dispose();
         for (Block block : blockManager.getBlocks()) {
-            block.modelInstance.model.dispose();
-            physicsSystem.removeRigidBody(block.body);
-            block.body.dispose();
+            block.getModelInstance().model.dispose();
+            physicsSystem.removeRigidBody(block.getBody());
+            block.getBody().dispose();
         }
         blockManager.clearBlocks();
         physicsSystem.removeRigidBody(baseBody);

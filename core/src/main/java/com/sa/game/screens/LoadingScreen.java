@@ -36,11 +36,6 @@ public class LoadingScreen extends ScreenAdapter {
         }
     }
 
-    @Override public void resize(int width, int height) {}
-    @Override public void show() {}
-    @Override public void hide() {}
-    @Override public void pause() {}
-    @Override public void resume() {}
     @Override public void dispose() {
         batch.dispose();
         font.dispose();

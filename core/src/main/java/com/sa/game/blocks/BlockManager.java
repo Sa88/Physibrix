@@ -98,8 +98,8 @@ public class BlockManager {
         }
 
         for (Block existingBlock : blocks) {
-            Vector3 existingPos = existingBlock.modelInstance.transform.getTranslation(new Vector3());
-            float existingHeight = existingBlock.boundingBox.getHeight();
+            Vector3 existingPos = existingBlock.getModelInstance().transform.getTranslation(new Vector3());
+            float existingHeight = existingBlock.getBoundingBox().getHeight();
 
             Vector3 topOfExisting = new Vector3(existingPos).add(0, existingHeight / 2f, 0);
 
@@ -116,10 +116,11 @@ public class BlockManager {
 
     private boolean checkCollision(Vector3 position, float newBlockWidth, float newBlockHeight, float newBlockDepth) {
         for (Block existingBlock : blocks) {
-            Vector3 existingPos = existingBlock.modelInstance.transform.getTranslation(position);
-            float existingHeight = existingBlock.boundingBox.getHeight();
-            float existingWidth = existingBlock.boundingBox.getWidth();
-            float existingDepth = existingBlock.boundingBox.getDepth();
+            Vector3 existingPos = existingBlock.getModelInstance().transform.getTranslation(position);
+            var existingBoundingBox = existingBlock.getBoundingBox();
+            float existingHeight = existingBoundingBox.getHeight();
+            float existingWidth = existingBoundingBox.getWidth();
+            float existingDepth = existingBoundingBox.getDepth();
 
             // Verificação de colisão lateral
             float dx = Math.abs(position.x - existingPos.x);

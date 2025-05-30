@@ -97,10 +97,6 @@ public class Assets implements Disposable {
         assetManager.load(AssetPaths.CANCEL_BLOCK, Texture.class);
     }
 
-    public AssetManager getAssetManager() {
-        return assetManager;
-    }
-
     @Override
     public void dispose() {
         assetManager.dispose();

@@ -92,14 +92,14 @@ public class DragHandler extends InputAdapter implements BlockSelectionListener 
             tempBlock.modelInstance.materials.get(0).set(GREEN);
         }*/
 
-        tempBlock.modelInstance.transform.setToTranslation(snappedCoords);
+        tempBlock.getModelInstance().transform.setToTranslation(snappedCoords);
     }
 
     @Override
     public void confirmPlacement() {
         if (hasTempBlock()) {
             Vector3 snappedCoords = new Vector3();
-            tempBlock.modelInstance.transform.getTranslation(snappedCoords);
+            tempBlock.getModelInstance().transform.getTranslation(snappedCoords);
 
             world.addBlock(snappedCoords, currentMaterial, currentBlockType, currentShapeType);
 
@@ -139,7 +139,7 @@ public class DragHandler extends InputAdapter implements BlockSelectionListener 
             if (!isOverUI()) {
                 updateTempBlockPosition(Gdx.input.getX(), Gdx.input.getY());
             }
-            modelBatch.render(tempBlock.modelInstance, world.getEnvironment());
+            modelBatch.render(tempBlock.getModelInstance(), world.getEnvironment());
         }
 
         if (world.isRemoveMode() && Gdx.input.justTouched()) {

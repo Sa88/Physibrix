@@ -12,8 +12,8 @@ import com.sa.game.MaterialType;
 public class PhysicsProperties {
 
     public static float getContactArea(Block blockA, Block blockB) {
-        Vector3 sizeA = BlockDimensions.getFullExtents(blockA.blockType);
-        Vector3 sizeB = BlockDimensions.getFullExtents(blockB.blockType);
+        Vector3 sizeA = BlockDimensions.getFullExtents(blockA.getBlockType());
+        Vector3 sizeB = BlockDimensions.getFullExtents(blockB.getBlockType());
 
         // Considerar a área da base que entra em contato (X x Z)
         float contactWidth = Math.min(sizeA.x, sizeB.x);

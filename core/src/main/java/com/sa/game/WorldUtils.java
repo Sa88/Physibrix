@@ -8,7 +8,7 @@ import com.sa.game.grid.GridUtils;
 public class WorldUtils {
 
     public static float getMaxBlockHeight(World world) {
-        return world.getBlockManager().getBlocks().stream().map(b -> b.boundingBox.getHeight()).max(Float::compareTo).orElse(0f);
+        return world.getBlockManager().getBlocks().stream().map(b -> b.getBoundingBox().getHeight()).max(Float::compareTo).orElse(0f);
     }
 
     public static Vector3 getSnappedWorldCoordinates(World world, int screenX, int screenY, BlockType blockType) {
@@ -43,15 +43,15 @@ public class WorldUtils {
             .filter(b -> {
 
                 // Pega a posição central do bloco
-                Vector3 pos = b.modelInstance.transform.getTranslation(new Vector3());
+                Vector3 pos = b.getModelInstance().transform.getTranslation(new Vector3());
 
                 // Verifica se o ponto (x, z) está dentro da base do bloco
-                return isPointInsideBlockArea(x, z, b.boundingBox, pos, tempBlock.boundingBox);
+                return isPointInsideBlockArea(x, z, b.getBoundingBox(), pos, tempBlock.getBoundingBox());
 
             })
             .mapToDouble(b -> {
-                Vector3 pos = b.modelInstance.transform.getTranslation(new Vector3());
-                float height = b.boundingBox.getHeight();
+                Vector3 pos = b.getModelInstance().transform.getTranslation(new Vector3());
+                float height = b.getBoundingBox().getHeight();
                 return pos.y + height / 2f; // retorna o topo do bloco
             })
             .max() // queremos a altura do bloco mais alto que cobre esse ponto
@@ -64,13 +64,13 @@ public class WorldUtils {
             .filter(b -> {
 
                 // Pega a posição central do bloco
-                Vector3 pos = b.modelInstance.transform.getTranslation(new Vector3());
+                Vector3 pos = b.getModelInstance().transform.getTranslation(new Vector3());
 
-                return isPointInsideBlockArea(x, z, b.boundingBox, pos);
+                return isPointInsideBlockArea(x, z, b.getBoundingBox(), pos);
             })
             .mapToDouble(b -> {
-                Vector3 pos = b.modelInstance.transform.getTranslation(new Vector3());
-                float height = b.boundingBox.getHeight();
+                Vector3 pos = b.getModelInstance().transform.getTranslation(new Vector3());
+                float height = b.getBoundingBox().getHeight();
 
                 return pos.y + height / 2f; // retorna o topo do bloco
             })
@@ -79,22 +79,25 @@ public class WorldUtils {
     }
 
     public static boolean areAdjacent(Block a, Block b) {
-        Vector3 posA = a.modelInstance.transform.getTranslation(new Vector3());
-        Vector3 posB = b.modelInstance.transform.getTranslation(new Vector3());
+        Vector3 posA = a.getModelInstance().transform.getTranslation(new Vector3());
+        Vector3 posB = b.getModelInstance().transform.getTranslation(new Vector3());
 
-        float axMin = posA.x - a.boundingBox.getWidth() / 2f;
-        float axMax = posA.x + a.boundingBox.getWidth() / 2f;
-        float ayMin = posA.y - a.boundingBox.getHeight() / 2f;
-        float ayMax = posA.y + a.boundingBox.getHeight() / 2f;
-        float azMin = posA.z - a.boundingBox.getDepth() / 2f;
-        float azMax = posA.z + a.boundingBox.getDepth() / 2f;
+        var aBoundingBox = a.getBoundingBox();
+        var bBoundingBox = b.getBoundingBox();
 
-        float bxMin = posB.x - b.boundingBox.getWidth() / 2f;
-        float bxMax = posB.x + b.boundingBox.getWidth() / 2f;
-        float byMin = posB.y - b.boundingBox.getHeight() / 2f;
-        float byMax = posB.y + b.boundingBox.getHeight() / 2f;
-        float bzMin = posB.z - b.boundingBox.getDepth() / 2f;
-        float bzMax = posB.z + b.boundingBox.getDepth() / 2f;
+        float axMin = posA.x - aBoundingBox.getWidth() / 2f;
+        float axMax = posA.x + aBoundingBox.getWidth() / 2f;
+        float ayMin = posA.y - aBoundingBox.getHeight() / 2f;
+        float ayMax = posA.y + aBoundingBox.getHeight() / 2f;
+        float azMin = posA.z - aBoundingBox.getDepth() / 2f;
+        float azMax = posA.z + aBoundingBox.getDepth() / 2f;
+
+        float bxMin = posB.x - bBoundingBox.getWidth() / 2f;
+        float bxMax = posB.x + bBoundingBox.getWidth() / 2f;
+        float byMin = posB.y - bBoundingBox.getHeight() / 2f;
+        float byMax = posB.y + bBoundingBox.getHeight() / 2f;
+        float bzMin = posB.z - bBoundingBox.getDepth() / 2f;
+        float bzMax = posB.z + bBoundingBox.getDepth() / 2f;
 
         // Define tolerância para evitar erros de ponto flutuante
         float epsilon = 0.001f;
