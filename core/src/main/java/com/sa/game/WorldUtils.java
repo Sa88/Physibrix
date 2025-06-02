@@ -15,17 +15,6 @@ public class WorldUtils {
         return GridUtils.snapToGrid(world.getWorldCoordinates(screenX, screenY), blockType);
     }
 
-    public static boolean isPointInsideBlockArea(float x, float z, BoundingBox blockBox, Vector3 blockPos) {
-        // Calcula os limites do BoundingBox em X e Z, baseados na posição do bloco e no tamanho do BoundingBox
-        float minX = blockPos.x + blockBox.min.x;
-        float maxX = blockPos.x + blockBox.max.x;
-        float minZ = blockPos.z + blockBox.min.z;
-        float maxZ = blockPos.z + blockBox.max.z;
-
-        // Verifica se o ponto (x, z) está dentro da área
-        return (x >= minX && x <= maxX) && (z >= minZ && z <= maxZ);
-    }
-
     public static boolean isPointInsideBlockArea(float x, float z, BoundingBox blockBox, Vector3 blockPos, BoundingBox blockBox2) {
         // Calcula os limites do BoundingBox em X e Z, baseados na posição do bloco e no tamanho do BoundingBox
         float minX = blockPos.x + blockBox.min.x + blockBox2.min.x;
@@ -58,25 +47,6 @@ public class WorldUtils {
             .orElse(0f);
     }
 
-    public static float getHeightAt(World world, float x, float z) {
-
-        return (float) world.getBlockManager().getBlocks().stream()
-            .filter(b -> {
-
-                // Pega a posição central do bloco
-                Vector3 pos = b.getModelInstance().transform.getTranslation(new Vector3());
-
-                return isPointInsideBlockArea(x, z, b.getBoundingBox(), pos);
-            })
-            .mapToDouble(b -> {
-                Vector3 pos = b.getModelInstance().transform.getTranslation(new Vector3());
-                float height = b.getBoundingBox().getHeight();
-
-                return pos.y + height / 2f; // retorna o topo do bloco
-            })
-            .max() // queremos a altura do bloco mais alto que cobre esse ponto
-            .orElse(0f);
-    }
 
     public static boolean areAdjacent(Block a, Block b) {
         Vector3 posA = a.getModelInstance().transform.getTranslation(new Vector3());

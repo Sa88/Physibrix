@@ -25,8 +25,6 @@ import com.sa.game.camera.CameraController;
 import com.sa.game.grid.GridRenderer;
 import com.sa.game.physics.PhysicsSystem;
 
-import java.util.Iterator;
-
 public class World implements GameCommandListener, Disposable {
     private CameraController cameraController;
     private ModelBatch modelBatch;
@@ -34,18 +32,11 @@ public class World implements GameCommandListener, Disposable {
     private Model baseModel;
     private btRigidBody baseBody;
     private ModelInstance baseInstance;
-
     private GridRenderer gridRenderer;
-
-    private boolean removeMode;
     private boolean renderWarnings;
-
     private StabilityMonitor stabilityMonitor;
-
     private SpriteBatch warningBatch;
-
     private PhysicsSystem physicsSystem;
-
     private BlockManager blockManager;
 
     public World() {
@@ -64,7 +55,6 @@ public class World implements GameCommandListener, Disposable {
 
         createBase();
 
-        removeMode = false;
         renderWarnings = false;
 
         stabilityMonitor = new StabilityMonitor();
@@ -121,30 +111,6 @@ public class World implements GameCommandListener, Disposable {
         return new Vector3(pickRay.origin).mulAdd(pickRay.direction, t); // x/z plano
     }
 
-/*    public Vector3 getRaycastSnapPosition(int screenX, int screenY, BlockType type) {
-        Ray ray = cameraController.getCamera().getPickRay(screenX, screenY);
-
-        Vector3 from = ray.origin;
-        Vector3 to = new Vector3(ray.direction).scl(1000f).add(from); // distância longa
-
-        ClosestRayResultCallback callback = new ClosestRayResultCallback(from, to);
-        dynamicsWorld.rayTest(from, to, callback);
-
-        if (callback.hasHit()) {
-            Vector3 hitPoint = new Vector3();
-            Vector3 hitNormal = new Vector3();
-            callback.getHitPointWorld(hitPoint);
-            callback.getHitNormalWorld(hitNormal);
-
-            // Posição base para o novo bloco: um pouco afastado na direção da normal
-            Vector3 placementPos = new Vector3(hitPoint).add(hitNormal.scl(BlockDimensions.getHalfExtents(type).y * 2));
-
-            return GridUtils.snapToGrid(placementPos, type);
-        } else {
-            // Sem colisão — volta para o plano XZ (plano do chão)
-            return GridUtils.snapToGrid(getWorldCoordinates(screenX, screenY), type);
-        }
-    }*/
 
     public void render(DragHandler dragHandler) {
         Gdx.gl.glClearColor(0.4f, 0.6f, 0.9f, 1);
@@ -163,7 +129,7 @@ public class World implements GameCommandListener, Disposable {
             }
         }
 
-        // Renderizar a base
+        // Render base
         modelBatch.render(baseInstance, environment);
         modelBatch.end();
 
@@ -189,45 +155,13 @@ public class World implements GameCommandListener, Disposable {
         ModelFactory.disposeAllModels();
     }
 
-    public boolean isRemoveMode() {
-        return removeMode;
-    }
-
     public boolean isRenderWarnings() {
         return renderWarnings;
     }
 
-    public void setRemoveMode(boolean removeMode) {
-        this.removeMode = removeMode;
-    }
 
     public void setRenderWarnings(boolean renderWarnings) {
         this.renderWarnings = renderWarnings;
-    }
-
-    public void removeBlockAt(Vector3 position) {
-        Iterator<Block> iterator = blockManager.getBlocks().iterator();
-
-        while (iterator.hasNext()) {
-            Block block = iterator.next();
-            // Verifica se a posição do bloco está suficientemente próxima
-            float width = block.getBoundingBox().getWidth() / 2;
-            float height = block.getBoundingBox().getHeight() / 2;
-            float depth = block.getBoundingBox().getDepth() / 2;
-
-            if (position.x >= width && position.y >= height && position.z >= depth) {
-                // Remove da física
-                if (block.getBody() != null) {
-                    physicsSystem.removeRigidBody(block.getBody());
-                    block.getBody().dispose();
-                }
-
-                // Remove da lista
-                iterator.remove();
-
-                return; // Sai após remover o primeiro encontrado
-            }
-        }
     }
 
     @Override
@@ -264,12 +198,17 @@ public class World implements GameCommandListener, Disposable {
     public void onClearBlocks() {
         clearBlocks();
     }
-    @Override
-    public void onToggleRemoveMode() {
-        setRemoveMode(!isRemoveMode());
-    }
+
     @Override
     public void onToggleWarnings() {
         setRenderWarnings(!isRenderWarnings());
+    }
+    @Override
+    public void onUndo() {
+        var blockRemoved = blockManager.removeLastBlock();
+        if(blockRemoved != null) {
+            physicsSystem.removeRigidBody(blockRemoved.getBody());
+            blockRemoved.getBody().dispose();
+        }
     }
 }

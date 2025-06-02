@@ -35,6 +35,7 @@ public class Assets implements Disposable {
     public Texture stabilityWarning;
     public Texture confirmBlock;
     public Texture cancelBlock;
+    public Texture undo;
 
     private Assets() {
         // Construtor privado
@@ -74,6 +75,7 @@ public class Assets implements Disposable {
         stabilityWarning = assetManager.get(AssetPaths.STABILITY_WARNING, Texture.class);
         confirmBlock = assetManager.get(AssetPaths.CONFIRM_BLOCK, Texture.class);
         cancelBlock = assetManager.get(AssetPaths.CANCEL_BLOCK, Texture.class);
+        undo = assetManager.get(AssetPaths.UNDO, Texture.class);
     }
 
     private void loadTextures() {
@@ -95,6 +97,7 @@ public class Assets implements Disposable {
         assetManager.load(AssetPaths.STABILITY_WARNING, Texture.class);
         assetManager.load(AssetPaths.CONFIRM_BLOCK, Texture.class);
         assetManager.load(AssetPaths.CANCEL_BLOCK, Texture.class);
+        assetManager.load(AssetPaths.UNDO, Texture.class);
     }
 
     @Override

@@ -22,4 +22,5 @@ public class AssetPaths {
 
     public static final String CONFIRM_BLOCK = "ui/icons/confirm.png";
     public static final String CANCEL_BLOCK = "ui/icons/cancel.png";
+    public static final String UNDO = "ui/icons/undo.png";
 }

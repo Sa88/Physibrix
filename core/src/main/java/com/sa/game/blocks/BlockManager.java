@@ -24,7 +24,7 @@ public class BlockManager {
 
         float mass = PhysicsProperties.getMass(currentMaterial);
 
-        // Definir propriedades físicas
+        // Definition of physics properties
         btDefaultMotionState motionState = new btDefaultMotionState(instance.transform);
         Vector3 inertia = new Vector3();
         shape.calculateLocalInertia(mass, inertia);
@@ -42,7 +42,7 @@ public class BlockManager {
         // Aplica a posição inicial do bloco no mundo
         body.proceedToTransform(instance.transform);
 
-        // Criação do bloco
+        // Block creation
         return new Block(currentBlockType, currentMaterial, instance, body);
     }
 
@@ -52,13 +52,13 @@ public class BlockManager {
 
     public void removeBlock(Block block) {
         blocks.remove(block);
-        // ... disposal logic ...
     }
 
-    public void removeLastBlock() {
+    public Block removeLastBlock() {
         if (!blocks.isEmpty()) {
-            blocks.remove(blocks.size() - 1);
+            return blocks.remove(blocks.size() - 1);
         }
+        return null;
     }
 
     public List<Block> getBlocks() {
@@ -92,7 +92,7 @@ public class BlockManager {
 
     private boolean checkSupport(Vector3 baseCenter, float newBlockHeight) {
 
-        // Considera o chão/base do mundo como suporte
+        // Consider base of world as support
         if (Math.abs(baseCenter.y) < 0.05f) {
             return true;
         }
@@ -107,11 +107,11 @@ public class BlockManager {
             float horizontalDistance = topOfExisting.dst(new Vector3(baseCenter.x, topOfExisting.y, baseCenter.z));
 
             if (verticalGap < 0.1f && horizontalDistance < 0.6f) {
-                return true; // Tem suporte
+                return true; // has support
             }
         }
 
-        return false; // Sem suporte
+        return false; // No support
     }
 
     private boolean checkCollision(Vector3 position, float newBlockWidth, float newBlockHeight, float newBlockDepth) {
@@ -132,9 +132,9 @@ public class BlockManager {
             float overlapZ = (newBlockDepth + existingDepth) / 2f;
 
             if (dx < overlapX && dy < overlapY && dz < overlapZ) {
-                return true; // Colisão detectada
+                return true; // Collision detected
             }
         }
-        return false; // Sem colisão
+        return false; // No collision
     }
 }

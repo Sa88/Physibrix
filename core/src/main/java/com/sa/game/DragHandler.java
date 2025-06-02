@@ -141,15 +141,6 @@ public class DragHandler extends InputAdapter implements BlockSelectionListener 
             }
             modelBatch.render(tempBlock.getModelInstance(), world.getEnvironment());
         }
-
-        if (world.isRemoveMode() && Gdx.input.justTouched()) {
-
-            // Obtém as coordenadas do mundo onde o jogador clicou
-            Vector3 worldPos = world.getWorldCoordinates(Gdx.input.getX(), Gdx.input.getY());
-            worldPos.y = WorldUtils.getHeightAt(world, worldPos.x, worldPos.z) / 2;
-            // Remove o bloco na posição clicada
-            world.removeBlockAt(worldPos);
-        }
     }
     @Override
     public void onBlockSelected(MaterialType material, BlockType type, BlockShapeType shape) {

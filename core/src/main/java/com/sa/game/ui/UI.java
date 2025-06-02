@@ -37,8 +37,8 @@ public class UI {
     private MaterialType currentMaterial = CONCRETE;
     private BlockType currentBlockType = BASE;
     private BlockShapeType currentShapeType = BOX;
-    private BlockSelectionListener selectionListener;
-    private GameCommandListener commandListener;
+    private final BlockSelectionListener selectionListener;
+    private final GameCommandListener commandListener;
 
     private Table materialMenu;
 
@@ -60,7 +60,7 @@ public class UI {
         this.commandListener = commandListener;
         Gdx.input.setInputProcessor(stage);
 
-        // Materiais
+        // Materials
 
         Table materialTable = new Table();
         materialTable.top();
@@ -74,9 +74,9 @@ public class UI {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (materialMenu != null && materialMenu.hasParent()) {
-                    materialMenu.remove(); // colapsa
+                    materialMenu.remove(); // collapse
                 } else {
-                    openMaterialsMenu(materialTable); // expande
+                    openMaterialsMenu(materialTable); // expand
                 }
             }
         });
@@ -87,30 +87,21 @@ public class UI {
         blockTable.setFillParent(true);
         stage.addActor(blockTable);
 
-        // Estrutura colapsável para blocos
+
         addBlockCategoryMenu(blockTable, "Pillar", PILLAR);
         addBlockCategoryMenu(blockTable, "Base", BASE);
         addBlockCategoryMenu(blockTable, "Step", STEP);
         addBlockCategoryMenu(blockTable, "Roof", ROOF);
-
-//        TextButton removeBlockButton = new TextButton("Remove block", skin, "toggle");
 
         Table bottomTable = new Table();
         bottomTable.bottom().left();
         bottomTable.setFillParent(true);
         bottomTable.add(createExitButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
         bottomTable.add(createCleanUpButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
-//        bottomTable.add(removeBlockButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
         bottomTable.add(createStabilityWarningButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
+        bottomTable.add(createUndoButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
         bottomTable.add(createCancelButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
         bottomTable.add(createConfirmButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
-
-/*        removeBlockButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                commandListener.onToggleRemoveMode();
-            }
-        });*/
 
         stage.addActor(bottomTable);
     }
@@ -162,6 +153,17 @@ public class UI {
         return button;
     }
 
+    private ImageButton createUndoButton() {
+        ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().undo)));
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                commandListener.onUndo();
+            }
+        });
+        return button;
+    }
+
     private ImageButton createConfirmButton() {
         confirmButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().confirmBlock)));
         confirmButton.setVisible(false);
@@ -191,7 +193,7 @@ public class UI {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 currentMaterial = type;
-                materialMenu.remove(); // Fecha o menu
+                materialMenu.remove(); // Close menu
             }
         });
         return button;
