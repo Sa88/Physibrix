@@ -17,7 +17,6 @@ import com.sa.game.mode.mission.Mission;
 import com.sa.game.mode.mission.MissionLoader;
 import com.sa.game.mode.mission.MissionMode;
 import com.sa.game.Main;
-import com.sa.game.World;
 import com.sa.game.assets.Assets;
 import com.sa.game.mode.GameMode;
 
@@ -26,7 +25,6 @@ public class MissionSelectScreen extends ScreenAdapter {
 
     private final Main main;
     private final Stage stage;
-    private final World world;
     private final MissionMode missionMode;
     private final Skin skin;
     private final SpriteBatch spriteBatch;
@@ -34,7 +32,6 @@ public class MissionSelectScreen extends ScreenAdapter {
     public MissionSelectScreen(Main main, GameMode gameMode, Skin skin) {
         this.main = main;
         this.stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-        this.world = new World();
         this.missionMode = (MissionMode) gameMode;
         this.skin = skin;
         this.spriteBatch = new SpriteBatch();
@@ -47,7 +44,7 @@ public class MissionSelectScreen extends ScreenAdapter {
 
         Gdx.input.setInputProcessor(stage);
 
-        List<Mission> missions = MissionLoader.loadMissions(world);
+        List<Mission> missions = MissionLoader.loadMissions();
         Table table = new Table();
         table.setFillParent(true);
 

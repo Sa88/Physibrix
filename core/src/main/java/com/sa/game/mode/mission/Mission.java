@@ -1,16 +1,19 @@
 package com.sa.game.mode.mission;
 import com.sa.game.mode.mission.goals.MissionGoal;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import java.util.List;
+
+@Data
+@AllArgsConstructor
 public class Mission {
     private final String name;
     private final String description;
     private final List<MissionGoal> goals;
 
-    public Mission(String name, String description, List<MissionGoal> goals) {
-        this.name = name;
-        this.description = description;
-        this.goals = goals;
+    public Mission(String name, String description) {
+        this(name, description, null);
     }
 
     public boolean isCompleted() {
@@ -20,13 +23,5 @@ public class Mission {
             }
         }
         return true;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

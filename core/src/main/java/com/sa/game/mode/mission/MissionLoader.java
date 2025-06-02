@@ -1,6 +1,5 @@
 package com.sa.game.mode.mission;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.sa.game.World;
 import com.sa.game.mode.mission.goals.*;
@@ -12,12 +11,23 @@ public class MissionLoader {
 
     public static List<Mission> loadMissions(World world) {
         Json json = new Json();
-        Array<MissionData> missionDataArray = json.fromJson(Array.class, MissionData.class, Gdx.files.internal("missions/missions.json"));
+        List<MissionData> missionDataList = json.fromJson(List.class, MissionData.class, Gdx.files.internal("missions/missions.json"));
+
+        List<Mission> missions = new ArrayList<>();
+        for (MissionData data : missionDataList) {
+            List<MissionGoal> goals = createGoalsFromData(world, data.goals);
+            missions.add(new Mission(data.name, data.description, goals));
+        }
+        return missions;
+    }
+
+    public static List<Mission> loadMissions() {
+        Json json = new Json();
+        List<MissionData> missionDataArray = json.fromJson(List.class, MissionData.class, Gdx.files.internal("missions/missions.json"));
 
         List<Mission> missions = new ArrayList<>();
         for (MissionData data : missionDataArray) {
-            List<MissionGoal> goals = createGoalsFromData(world, data.goals);
-            missions.add(new Mission(data.name, data.description, goals));
+            missions.add(new Mission(data.name, data.description));
         }
         return missions;
     }
@@ -36,7 +46,7 @@ public class MissionLoader {
             case "height" -> new BuildHeightGoal(world, data.value);
             case "length" -> new BuildLenghtGoal(world, data.value);
             case "wind_resistance" -> new WindResistanceGoal(world, data.value, data.duration);
-            default -> throw new IllegalArgumentException("Tipo de missão desconhecido: " + data.type);
+            default -> throw new IllegalArgumentException("Cannot find mission goal type: " + data.type);
         };
     }
 }
