@@ -1,9 +1,12 @@
 package com.sa.game.physics;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.badlogic.gdx.physics.bullet.collision.btConeShape;
 import com.badlogic.gdx.physics.bullet.collision.btCylinderShape;
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
+import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
 import com.sa.game.blocks.Block;
 import com.sa.game.blocks.BlockDimensions;
 import com.sa.game.blocks.BlockShapeType;
@@ -11,14 +14,37 @@ import com.sa.game.blocks.BlockType;
 import com.sa.game.MaterialType;
 public class PhysicsProperties {
 
+    public static btDefaultMotionState createMotionState(Matrix4 transform) {
+        return new btDefaultMotionState(transform);
+    }
+
+    public static Vector3 calculateInertia(btCollisionShape shape, float mass) {
+        Vector3 inertia = new Vector3();
+        shape.calculateLocalInertia(mass, inertia);
+        return inertia;
+    }
+
+    public static btRigidBody.btRigidBodyConstructionInfo createBodyInfo(float mass, btDefaultMotionState motionState, btCollisionShape shape, Vector3 inertia) {
+        return new btRigidBody.btRigidBodyConstructionInfo(mass, motionState, shape, inertia);
+    }
+
+    public static void configureBody(btRigidBody body, MaterialType material, Matrix4 transform) {
+        body.setFriction(getFriction(material));
+        body.setRestitution(getRestitution(material));
+        float damping = getDamping(material);
+        body.setDamping(damping, damping);
+        body.proceedToTransform(transform);
+    }
+
+
     public static float getContactArea(Block blockA, Block blockB) {
         Vector3 sizeA = BlockDimensions.getFullExtents(blockA.getBlockType());
         Vector3 sizeB = BlockDimensions.getFullExtents(blockB.getBlockType());
 
-        // Considerar a área da base que entra em contato (X x Z)
+        // Consider the area of base that is in contact (X x Z)
         float contactWidth = Math.min(sizeA.x, sizeB.x);
         float contactDepth = Math.min(sizeA.z, sizeB.z);
-        return contactWidth * contactDepth; // Área em m²
+        return contactWidth * contactDepth; // area in m²
     }
 
     public static float getMass(MaterialType material) {

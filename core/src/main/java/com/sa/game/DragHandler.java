@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.sa.game.blocks.Block;
 import com.sa.game.blocks.BlockDimensions;
+import com.sa.game.blocks.BlockFactory;
 import com.sa.game.blocks.BlockShapeType;
 import com.sa.game.blocks.BlockType;
 
@@ -72,7 +73,7 @@ public class DragHandler extends InputAdapter implements BlockSelectionListener 
         currentMaterial = material;
         currentBlockType = blockType;
         currentShapeType = shapeType;
-        tempBlock = world.getBlockManager().createBlock(new Vector3(), material, currentBlockType, currentShapeType);
+        tempBlock = BlockFactory.createBlock(new Vector3(), material, currentBlockType, currentShapeType);
         world.getGridRenderer().setBuildMode(true);
     }
 

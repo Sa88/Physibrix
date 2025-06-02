@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.bullet.linearmath.btDefaultMotionState;
 import com.badlogic.gdx.utils.Disposable;
 import com.sa.game.assets.Assets;
 import com.sa.game.blocks.Block;
+import com.sa.game.blocks.BlockFactory;
 import com.sa.game.blocks.BlockManager;
 import com.sa.game.blocks.BlockShapeType;
 import com.sa.game.blocks.BlockType;
@@ -84,7 +85,7 @@ public class World implements GameCommandListener, Disposable {
 
     public void addBlock(Vector3 position, MaterialType currentMaterial, BlockType currentBlockType, BlockShapeType currentShapeType) {
 
-        Block block = blockManager.createBlock(position, currentMaterial, currentBlockType, currentShapeType);
+        Block block = BlockFactory.createBlock(position, currentMaterial, currentBlockType, currentShapeType);
         blockManager.addBlock(block);
 
         // Adicionar o corpo rígido ao mundo físico
