@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.sa.game.BlockSelectionListener;
+import com.sa.game.assets.TextureType;
 import com.sa.game.blocks.BlockShapeType;
 import com.sa.game.blocks.BlockType;
 import com.sa.game.GameCommandListener;
@@ -67,7 +68,7 @@ public class UI {
         materialTable.setFillParent(true);
         stage.addActor(materialTable);
 
-        TextureRegionDrawable materialsDrawable = new TextureRegionDrawable(new TextureRegion(Assets.getInstance().materials));
+        TextureRegionDrawable materialsDrawable = new TextureRegionDrawable(new TextureRegion(Assets.getInstance().get(TextureType.MATERIALS)));
         ImageButton materialsButton = new ImageButton(materialsDrawable);
         materialTable.add(materialsButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
         materialsButton.addListener(new ClickListener() {
@@ -109,19 +110,19 @@ public class UI {
     private void openMaterialsMenu(Table materialTable) {
         materialMenu = new Table();
 
-        materialMenu.add(createMaterialButton(Assets.getInstance().concrete, CONCRETE)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
-        materialMenu.add(createMaterialButton(Assets.getInstance().steel, STEEL)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
-        materialMenu.add(createMaterialButton(Assets.getInstance().wood, WOOD)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
-        materialMenu.add(createMaterialButton(Assets.getInstance().glass, GLASS)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
-        materialMenu.add(createMaterialButton(Assets.getInstance().brick, BRICK)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
-        materialMenu.add(createMaterialButton(Assets.getInstance().stone, STONE)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
+        materialMenu.add(createMaterialButton(Assets.getInstance().get(TextureType.CONCRETE), CONCRETE)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
+        materialMenu.add(createMaterialButton(Assets.getInstance().get(TextureType.STEEL), STEEL)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
+        materialMenu.add(createMaterialButton(Assets.getInstance().get(TextureType.WOOD), WOOD)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
+        materialMenu.add(createMaterialButton(Assets.getInstance().get(TextureType.GLASS), GLASS)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
+        materialMenu.add(createMaterialButton(Assets.getInstance().get(TextureType.BRICK), BRICK)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
+        materialMenu.add(createMaterialButton(Assets.getInstance().get(TextureType.STONE), STONE)).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(PADDING);
 
         materialTable.row();
         materialTable.add(materialMenu);
     }
 
     private ImageButton createExitButton() {
-        ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().exit)));
+        ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().get(TextureType.EXIT))));
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -132,7 +133,7 @@ public class UI {
     }
 
     private ImageButton createCleanUpButton() {
-        ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().cleanup)));
+        ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().get(TextureType.CLEAN_UP))));
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -143,7 +144,7 @@ public class UI {
     }
 
     private ImageButton createStabilityWarningButton() {
-        ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().stabilityWarning)));
+        ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().get(TextureType.STABILITY_WARNING))));
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -154,7 +155,7 @@ public class UI {
     }
 
     private ImageButton createUndoButton() {
-        ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().undo)));
+        ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().get(TextureType.UNDO))));
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -165,7 +166,7 @@ public class UI {
     }
 
     private ImageButton createConfirmButton() {
-        confirmButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().confirmBlock)));
+        confirmButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().get(TextureType.CONFIRM_BLOCK))));
         confirmButton.setVisible(false);
         confirmButton.addListener(new ClickListener() {
             @Override
@@ -176,7 +177,7 @@ public class UI {
         return confirmButton;
     }
     private ImageButton createCancelButton() {
-        cancelButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().cancelBlock)));
+        cancelButton = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().get(TextureType.CANCEL_BLOCK))));
         cancelButton.setVisible(false);
         cancelButton.addListener(new ClickListener() {
             @Override

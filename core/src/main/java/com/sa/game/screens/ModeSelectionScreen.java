@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sa.game.Main;
 import com.sa.game.assets.Assets;
+import com.sa.game.assets.TextureType;
 import com.sa.game.mode.GameModeManager;
 import com.sa.game.mode.GameModeType;
 import com.sa.game.mode.GameModeUI;
@@ -65,7 +66,7 @@ public class ModeSelectionScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        spriteBatch.draw(Assets.getInstance().concrete, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        spriteBatch.draw(Assets.getInstance().get(TextureType.CONCRETE), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         spriteBatch.end();
         stage.act(delta);
         stage.draw();

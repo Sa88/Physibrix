@@ -13,7 +13,12 @@ import com.sa.game.blocks.BlockType;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.sa.game.assets.TextureType.*;
+
+
 public class ModelFactory {
+
+    private ModelFactory() {}
 
     private static final Map<BlockModelKey, Model> modelCache = new HashMap<>();
 
@@ -21,7 +26,7 @@ public class ModelFactory {
 
     public static Model createGroundModel() {
         ModelBuilder modelBuilder = new ModelBuilder();
-        return modelBuilder.createBox(50f, 1f, 50f, new Material(TextureAttribute.createDiffuse(Assets.getInstance().concrete)),VERTEX_ATTRIBUTES);
+        return modelBuilder.createBox(50f, 1f, 50f, new Material(TextureAttribute.createDiffuse(Assets.getInstance().get(CONCRETE))),VERTEX_ATTRIBUTES);
     }
 
     public static Model createPillarModel(Material material, BlockShapeType shapeType) {
@@ -61,12 +66,12 @@ public class ModelFactory {
 
         // Seleciona o material baseado no tipo atual
         Material material = switch (currentMaterial) {
-            case STEEL -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().steel));
-            case WOOD -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().wood));
-            case GLASS -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().glass));
-            case BRICK -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().brick));
-            case STONE -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().stone));
-            default -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().concrete));
+            case STEEL -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().get(STEEL)));
+            case WOOD -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().get(WOOD)));
+            case GLASS -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().get(GLASS)));
+            case BRICK -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().get(BRICK)));
+            case STONE -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().get(STONE)));
+            default -> new Material(TextureAttribute.createDiffuse(Assets.getInstance().get(CONCRETE)));
         };
 
         Model model = switch (blockType) {

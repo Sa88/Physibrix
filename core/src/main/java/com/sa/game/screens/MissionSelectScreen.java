@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.sa.game.assets.TextureType;
 import com.sa.game.mode.mission.Mission;
 import com.sa.game.mode.mission.MissionLoader;
 import com.sa.game.mode.mission.MissionMode;
@@ -84,7 +85,7 @@ public class MissionSelectScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
-        spriteBatch.draw(Assets.getInstance().steel, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        spriteBatch.draw(Assets.getInstance().get(TextureType.STEEL), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         spriteBatch.end();
         stage.act(delta);
         stage.draw();

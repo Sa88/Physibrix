@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.bullet.collision.btPersistentManifold;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.sa.game.assets.Assets;
+import com.sa.game.assets.TextureType;
 import com.sa.game.blocks.Block;
 import com.sa.game.physics.PhysicsProperties;
 
@@ -105,9 +106,9 @@ public class StabilityMonitor implements Disposable {
 
             Texture icon;
             switch (data.riskLevel) {
-                case LOW: icon = Assets.getInstance().warningGreen; break;
-                case MEDIUM: icon = Assets.getInstance().warningYellow; break;
-                case HIGH: icon = Assets.getInstance().warningRed; break;
+                case LOW: icon = Assets.getInstance().get(TextureType.WARNING_GREEN); break;
+                case MEDIUM: icon = Assets.getInstance().get(TextureType.WARNING_YELLOW); break;
+                case HIGH: icon = Assets.getInstance().get(TextureType.WARNING_RED); break;
                 default: continue;
             }
 
