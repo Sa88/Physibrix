@@ -12,8 +12,8 @@ public class CameraGestureListener implements GestureDetector.GestureListener {
     private DragHandler dragHandler;
     private Stage uiStage;
 
-    private float zoomSpeed = 0.1f;
-    private final float panSpeed = 0.01f;
+    private static final float zoomSpeed = 0.1f;
+    private static final float panSpeed = 0.01f;
     public CameraGestureListener(CameraController cameraController) {
         this.camera = cameraController.getCamera();
     }

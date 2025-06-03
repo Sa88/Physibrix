@@ -9,16 +9,17 @@ import java.util.List;
 
 public class MissionLoader {
 
-    public static List<Mission> loadMissions(World world) {
+    public static Mission loadMission(World world, String missionId) {
         Json json = new Json();
         List<MissionData> missionDataList = json.fromJson(List.class, MissionData.class, Gdx.files.internal("missions/missions.json"));
 
-        List<Mission> missions = new ArrayList<>();
         for (MissionData data : missionDataList) {
-            List<MissionGoal> goals = createGoalsFromData(world, data.goals);
-            missions.add(new Mission(data.name, data.description, goals));
+            if (data.id.equals(missionId)) {
+                List<MissionGoal> goals = createGoalsFromData(world, data.goals);
+                return new Mission(data.id, data.name, data.description, goals);
+            }
         }
-        return missions;
+        throw new IllegalArgumentException("Mission not found: " + missionId);
     }
 
     public static List<Mission> loadMissions() {
@@ -27,7 +28,7 @@ public class MissionLoader {
 
         List<Mission> missions = new ArrayList<>();
         for (MissionData data : missionDataArray) {
-            missions.add(new Mission(data.name, data.description));
+            missions.add(new Mission(data.id, data.name, data.description));
         }
         return missions;
     }
