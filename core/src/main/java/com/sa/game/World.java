@@ -25,6 +25,7 @@ import com.sa.game.blocks.BlockType;
 import com.sa.game.camera.CameraController;
 import com.sa.game.grid.GridRenderer;
 import com.sa.game.physics.PhysicsSystem;
+import com.sa.game.physics.WindSystem;
 
 public class World implements GameCommandListener, Disposable {
     private CameraController cameraController;
@@ -39,6 +40,7 @@ public class World implements GameCommandListener, Disposable {
     private SpriteBatch warningBatch;
     private PhysicsSystem physicsSystem;
     private BlockManager blockManager;
+    private WindSystem windSystem;
 
     public World() {
         modelBatch = new ModelBatch();
@@ -53,6 +55,8 @@ public class World implements GameCommandListener, Disposable {
         physicsSystem = new PhysicsSystem();
 
         blockManager = new BlockManager();
+
+        windSystem = new WindSystem();
 
         createBase();
 
@@ -119,6 +123,9 @@ public class World implements GameCommandListener, Disposable {
         cameraController.update(Gdx.graphics.getDeltaTime());
         physicsSystem.update(Gdx.graphics.getDeltaTime());
 
+        // Update wind effects
+        windSystem.update(Gdx.graphics.getDeltaTime(), blockManager.getBlocks());
+
         modelBatch.begin(cameraController.getCamera());
 
         dragHandler.update(modelBatch);
@@ -154,6 +161,7 @@ public class World implements GameCommandListener, Disposable {
         blockManager.clearBlocks();
         stabilityMonitor.dispose();
         ModelFactory.disposeAllModels();
+        windSystem.stopWind();
     }
 
     public boolean isRenderWarnings() {
@@ -193,6 +201,10 @@ public class World implements GameCommandListener, Disposable {
 
     public GridRenderer getGridRenderer() {
         return gridRenderer;
+    }
+
+    public WindSystem getWindSystem() {
+        return windSystem;
     }
 
     @Override
