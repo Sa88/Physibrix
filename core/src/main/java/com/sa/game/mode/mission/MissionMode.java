@@ -17,15 +17,15 @@ public class MissionMode implements GameMode {
     }
     @Override
     public boolean canPlaceBlock(Block block) {
-        return false;
+        return true;
     }
     @Override
     public boolean canRemoveBlock() {
-        return false;
+        return true;
     }
     @Override
     public boolean isPhysicsEnabled() {
-        return false;
+        return true;
     }
     @Override
     public String getModeInstructions() {
