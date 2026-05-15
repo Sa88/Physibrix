@@ -10,12 +10,14 @@ import com.sa.game.World;
 import com.sa.game.camera.CameraControlUI;
 import com.sa.game.camera.CameraGestureListener;
 import com.sa.game.mode.mission.Mission;
+import com.sa.game.mode.mission.MissionMode;
 import com.sa.game.ui.UI;
 
 public class GameplayScreen extends ScreenAdapter {
 
     private final Main game;
     private Mission mission;
+    private MissionMode missionMode;
 
     private World world;
     private UI ui;
@@ -31,6 +33,7 @@ public class GameplayScreen extends ScreenAdapter {
     public GameplayScreen(Main game, Mission mission) {
         this.game = game;
         this.mission = mission;
+        this.missionMode = new MissionMode();
     }
 
     @Override
@@ -58,12 +61,27 @@ public class GameplayScreen extends ScreenAdapter {
 
         Gdx.input.setInputProcessor(inputMultiplexer);
 
+        // Start mission if one was selected
+        if (mission != null && missionMode != null) {
+            missionMode.startMission(mission);
+        }
     }
+
     @Override
     public void render(float delta) {
         world.render(dragHandler);
         ui.render();
         cameraControlUI.render(world.getCameraController());
+
+        // Update mission goals if in mission mode
+        if (mission != null && missionMode != null) {
+            missionMode.update(delta);
+            if (mission.isCompleted()) {
+                // Mission completed! Show victory screen or message
+                System.out.println("Mission completed: " + mission.getName());
+                // TODO: Show victory screen
+            }
+        }
     }
 
     @Override
