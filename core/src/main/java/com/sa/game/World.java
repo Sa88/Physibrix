@@ -25,6 +25,7 @@ import com.sa.game.blocks.BlockType;
 import com.sa.game.camera.CameraController;
 import com.sa.game.grid.GridRenderer;
 import com.sa.game.physics.PhysicsSystem;
+import com.sa.game.physics.WindRenderer;
 import com.sa.game.physics.WindSystem;
 
 public class World implements GameCommandListener, Disposable {
@@ -41,6 +42,7 @@ public class World implements GameCommandListener, Disposable {
     private PhysicsSystem physicsSystem;
     private BlockManager blockManager;
     private WindSystem windSystem;
+    private WindRenderer windRenderer;
 
     public World() {
         modelBatch = new ModelBatch();
@@ -57,6 +59,7 @@ public class World implements GameCommandListener, Disposable {
         blockManager = new BlockManager();
 
         windSystem = new WindSystem();
+        windRenderer = new WindRenderer(windSystem);
 
         createBase();
 
@@ -143,6 +146,8 @@ public class World implements GameCommandListener, Disposable {
 
         gridRenderer.render(cameraController.getCamera());
 
+        windRenderer.render(cameraController.getCamera());
+
         stabilityMonitor.update(Gdx.graphics.getDeltaTime(), physicsSystem.getDispatcher());
         if(renderWarnings) {
             stabilityMonitor.renderWarnings(warningBatch, cameraController.getCamera());
@@ -167,8 +172,6 @@ public class World implements GameCommandListener, Disposable {
     public boolean isRenderWarnings() {
         return renderWarnings;
     }
-
-
     public void setRenderWarnings(boolean renderWarnings) {
         this.renderWarnings = renderWarnings;
     }
@@ -188,6 +191,7 @@ public class World implements GameCommandListener, Disposable {
         physicsSystem.removeRigidBody(baseBody);
         baseBody.dispose();
         physicsSystem.dispose();
+        windRenderer.dispose();
         gridRenderer.dispose();
         Assets.getInstance().dispose();
     }
@@ -215,6 +219,15 @@ public class World implements GameCommandListener, Disposable {
     @Override
     public void onToggleWarnings() {
         setRenderWarnings(!isRenderWarnings());
+    }
+
+    @Override
+    public void onToggleWindSystem() {
+        if(windSystem.isWindActive()) {
+            windSystem.stopWind();
+        }  else {
+            windSystem.startWind(500, 10);
+        }
     }
     @Override
     public void onUndo() {

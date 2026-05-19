@@ -100,6 +100,7 @@ public class UI {
         bottomTable.add(createExitButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
         bottomTable.add(createCleanUpButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
         bottomTable.add(createStabilityWarningButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
+        bottomTable.add(createWindSystemButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
         bottomTable.add(createUndoButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
         bottomTable.add(createCancelButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
         bottomTable.add(createConfirmButton()).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padBottom(PADDING).padLeft(PADDING);
@@ -149,6 +150,17 @@ public class UI {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 commandListener.onToggleWarnings();
+            }
+        });
+        return button;
+    }
+
+    private ImageButton createWindSystemButton() {
+        ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(Assets.getInstance().get(TextureType.WIND))));
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                commandListener.onToggleWindSystem();
             }
         });
         return button;

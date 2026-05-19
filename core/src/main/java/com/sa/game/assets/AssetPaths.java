@@ -19,6 +19,7 @@ public class AssetPaths {
     public static final String EXIT = "ui/icons/exit.png";
     public static final String CLEAN_UP = "ui/icons/cleanup.png";
     public static final String STABILITY_WARNING = "ui/icons/stability_warning.png";
+    public static final String WIND = "ui/icons/wind.png";
 
     public static final String CONFIRM_BLOCK = "ui/icons/confirm.png";
     public static final String CANCEL_BLOCK = "ui/icons/cancel.png";

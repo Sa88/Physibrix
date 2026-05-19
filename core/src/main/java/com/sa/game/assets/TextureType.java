@@ -16,6 +16,7 @@ public enum TextureType {
     EXIT(AssetPaths.EXIT),
     CLEAN_UP(AssetPaths.CLEAN_UP),
     STABILITY_WARNING(AssetPaths.STABILITY_WARNING),
+    WIND(AssetPaths.WIND),
     CONFIRM_BLOCK(AssetPaths.CONFIRM_BLOCK),
     CANCEL_BLOCK(AssetPaths.CANCEL_BLOCK),
     UNDO(AssetPaths.UNDO);
