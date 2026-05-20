@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
-import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionDispatcher;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
@@ -27,7 +26,7 @@ public class PhysicsSystem implements Disposable {
 
 
     private btDiscreteDynamicsWorld dynamicsWorld;
-    private btBroadphaseInterface broadphase;
+    private btDbvtBroadphase broadphase;
     private final btDefaultCollisionConfiguration collisionConfig;
     private final btCollisionDispatcher dispatcher;
     private final btSequentialImpulseConstraintSolver solver;
