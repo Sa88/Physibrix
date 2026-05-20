@@ -39,9 +39,13 @@ public class ModelFactory {
         };
     }
 
-    public static Model createBaseModel(Material material) {
+    public static Model createBaseModel(Material material, BlockShapeType shapeType) {
         ModelBuilder modelBuilder = new ModelBuilder();
-        return modelBuilder.createBox(4f, 0.5f, 4f, material, VERTEX_ATTRIBUTES);
+        return switch (shapeType) {
+            case BOX -> modelBuilder.createBox(4f, 0.5f, 4f, material, VERTEX_ATTRIBUTES);
+            case CYLINDER -> modelBuilder.createCylinder(4f, 0.5f, 4f, 16, material, VERTEX_ATTRIBUTES);
+            case CONE -> modelBuilder.createCone(4f, 0.5f, 4f, 16, material, VERTEX_ATTRIBUTES);
+        };
     }
 
     public static Model createRoofModel(Material material, BlockShapeType shapeType) {
@@ -77,7 +81,7 @@ public class ModelFactory {
 
         Model model = switch (blockType) {
             case PILLAR -> createPillarModel(material, blockShapeType);
-            case BASE -> createBaseModel(material);
+            case BASE -> createBaseModel(material, blockShapeType);
             case STEP -> createStepModel(material);
             case ROOF -> createRoofModel(material, blockShapeType);
         };

@@ -113,7 +113,7 @@ public class PhysicsProperties {
 
         return switch (blockShapeType) {
             case BOX -> new btBoxShape(halfExtents.cpy());
-            case CONE -> new btConeShape(halfExtents.x /2 , halfExtents.y);
+            case CONE -> new btConeShape(halfExtents.x, halfExtents.y);
             case CYLINDER -> new btCylinderShape(halfExtents.cpy());
         };
     }
