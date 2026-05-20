@@ -236,6 +236,7 @@ public class World implements GameCommandListener, Disposable {
         if(blockRemoved != null) {
             physicsSystem.removeRigidBody(blockRemoved.getBody());
             blockRemoved.getBody().dispose();
+            stabilityMonitor.removeConnection(blockRemoved);
         }
     }
 }

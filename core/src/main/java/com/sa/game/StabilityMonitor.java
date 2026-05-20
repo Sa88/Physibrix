@@ -21,6 +21,7 @@ import java.util.UUID;
 
 public class StabilityMonitor implements Disposable {
 
+
     public enum RiskLevel {
         LOW, MEDIUM, HIGH
     }
@@ -127,6 +128,10 @@ public class StabilityMonitor implements Disposable {
     private void applyVibrationEffect(Block block) {
         float vibration = MathUtils.sin(TimeUtils.millis() / 30f) * 0.05f;
         block.getModelInstance().transform.translate(0, vibration, 0);
+    }
+
+    public void removeConnection(Block blockRemoved) {
+        monitoredJoints.removeIf(stabilityData ->  stabilityData.blockA.getId().equals(blockRemoved.getId()) ||  stabilityData.blockB.getId().equals(blockRemoved.getId()));
     }
 
     @Override
