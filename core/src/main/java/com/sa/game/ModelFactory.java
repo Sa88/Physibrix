@@ -48,7 +48,8 @@ public class ModelFactory {
         ModelBuilder modelBuilder = new ModelBuilder();
         return switch (shapeType) {
             case BOX -> modelBuilder.createBox(1f, 2f, 1f, material, VERTEX_ATTRIBUTES);
-            default -> modelBuilder.createCone(1f, 2f, 1f, 16, material, VERTEX_ATTRIBUTES);
+            case CYLINDER -> modelBuilder.createCylinder(1f, 2f, 1f, 16, material, VERTEX_ATTRIBUTES);
+            case CONE -> modelBuilder.createCone(1f, 2f, 1f, 16, material, VERTEX_ATTRIBUTES);
         };
     }
 
