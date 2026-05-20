@@ -120,16 +120,17 @@ public class World implements GameCommandListener, Disposable {
     }
 
 
-    public void render(DragHandler dragHandler) {
+    public void render(DragHandler dragHandler, float deltaTime) {
         Gdx.gl.glClearColor(0.4f, 0.6f, 0.9f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        cameraController.update(Gdx.graphics.getDeltaTime());
-        physicsSystem.update(Gdx.graphics.getDeltaTime());
+        cameraController.update(deltaTime);
 
-        // Update wind effects
-        windSystem.update(Gdx.graphics.getDeltaTime(), blockManager.getBlocks());
+        physicsSystem.update(deltaTime);
 
         modelBatch.begin(cameraController.getCamera());
+
+        // Render base
+        modelBatch.render(baseInstance, environment);
 
         dragHandler.update(modelBatch);
 
@@ -140,18 +141,18 @@ public class World implements GameCommandListener, Disposable {
             }
         }
 
-        // Render base
-        modelBatch.render(baseInstance, environment);
         modelBatch.end();
 
         gridRenderer.render(cameraController.getCamera());
 
-        windRenderer.render(cameraController.getCamera());
-
-        stabilityMonitor.update(Gdx.graphics.getDeltaTime(), physicsSystem.getDispatcher());
+        stabilityMonitor.update(deltaTime, physicsSystem.getDispatcher());
         if(renderWarnings) {
             stabilityMonitor.renderWarnings(warningBatch, cameraController.getCamera());
         }
+
+        // Update wind effects
+        windSystem.update(deltaTime, blockManager.getBlocks());
+        windRenderer.render(cameraController.getCamera());
 
         physicsSystem.render(cameraController.getCamera());
 
@@ -226,7 +227,7 @@ public class World implements GameCommandListener, Disposable {
         if(windSystem.isWindActive()) {
             windSystem.stopWind();
         }  else {
-            windSystem.startWind(500, 10);
+            windSystem.startWind(5000, 10);
         }
     }
     @Override

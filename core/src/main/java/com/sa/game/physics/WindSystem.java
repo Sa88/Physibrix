@@ -71,6 +71,7 @@ public class WindSystem {
 
             // Get block position
             Vector3 blockPos = block.getModelInstance().transform.getTranslation(new Vector3());
+            System.out.println("BlockPos: " + blockPos);
 
             // Wave center moves across X axis over the wind duration
             float progress = windElapsed / windDuration;
@@ -78,15 +79,15 @@ public class WindSystem {
 
             // Distance from wave center
             float distanceFromWave = Math.abs(blockPos.x - waveCenter);
+            System.out.println("Distance from Wave Center: " + distanceFromWave);
             float waveWidth = 5f;
             float waveFalloff = (float) Math.exp(-distanceFromWave * distanceFromWave / (waveWidth * waveWidth));
 
             // Only apply force if block is in the wave
-            if (waveFalloff < 0.01f) {
+            if (waveFalloff < 0.95f) {
                 continue;
             }
 
-            // Get real surface area from bounding box
             float surfaceArea = block.getBoundingBox().getWidth() * block.getBoundingBox().getHeight();
 
             // MUCH STRONGER force to overcome constraints
@@ -96,16 +97,17 @@ public class WindSystem {
             float turbulence = 1f + (float) Math.sin(blockPos.y * 10 + blockPos.z * 10 + windElapsed * 5) * 0.3f;
             float finalForce = baseForce * turbulence;
 
-            // Use IMPULSE instead of continuous force (better for constraints)
-            Vector3 windImpulse = new Vector3(
-                finalForce * windDirection * deltaTime,
-                finalForce * 0.15f * deltaTime,
-                (float) Math.sin(windElapsed * 3 + blockPos.z) * finalForce * 0.2f * deltaTime
-            );
+            Vector3 windForce = new Vector3(
+                finalForce * windDirection,
+                finalForce * 0.05f,
+                (float) Math.sin(windElapsed * 3 + blockPos.z) * finalForce * 0.1f);
 
-            // Apply impulse at block center
-            Vector3 blockCenter = block.getModelInstance().transform.getTranslation(new Vector3());
-            body.applyImpulse(windImpulse, blockCenter);
+            System.out.println("Wind Force: " + windForce + ", Final Force: " + finalForce + ", Turbulence: " + turbulence + ", WaveFalloff: " + waveFalloff);
+
+            body.applyCentralForce(windForce);
+
+            System.out.println("Block velocity: " + body.getLinearVelocity() + " m/s | Wind force: " +
+                windForce.len() + " N | WaveFalloff: " + waveFalloff);
         }
     }
 
