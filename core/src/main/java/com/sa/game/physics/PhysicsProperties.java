@@ -73,25 +73,25 @@ public class PhysicsProperties {
 
     public static float getFriction(MaterialType material) {
         return switch (material) {
+            case CONCRETE -> 0.7f;            // Concreto tem boa aderência
+            case REINFORCED_CONCRETE -> 0.75f; // Um pouco mais que concreto comum
             case BRICK -> 0.6f;
             case STONE -> 0.8f;
             case STEEL -> 0.4f;               // Aço é escorregadio
-            case CONCRETE -> 0.7f;            // Concreto tem boa aderência
-            case REINFORCED_CONCRETE -> 0.75f; // Um pouco mais que concreto comum
-            case WOOD -> 0.5f;                // Madeira média
             case GLASS -> 0.2f;               // Muito escorregadio
+            case WOOD -> 0.5f;                // Madeira média
         };
     }
 
     public static float getRestitution(MaterialType material) {
         return switch (material) {
-            case GLASS -> 0.05f;               // quase nada de quique, frágil
-            case WOOD -> 0.2f;                 // madeira pode quicar um pouco
             case CONCRETE -> 0.1f;             // concreto é pesado, quase sem quique
             case REINFORCED_CONCRETE -> 0.05f; // um pouco menos que concreto comum
             case BRICK -> 0.05f;
             case STONE -> 0.02f;
             case STEEL -> 0.3f;                // aço pode quicar bem quando colide com força
+            case GLASS -> 0.05f;               // quase nada de quique, frágil
+            case WOOD -> 0.2f;                 // madeira pode quicar um pouco
         };
     }
 

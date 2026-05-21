@@ -113,6 +113,26 @@ public class World implements GameCommandListener, Disposable {
         }
     }
 
+    /**
+     * Converts screen coordinates into world coordinates projected onto the ground plane (Y = 0).
+     *
+     * <p>This method casts a picking ray from the camera through the given screen position
+     * and calculates the intersection point with the horizontal world plane located at Y = 0.
+     *
+     * <p>The resulting vector represents the corresponding position in world space,
+     * commonly used for:
+     * <ul>
+     *     <li>Block placement</li>
+     *     <li>Mouse picking</li>
+     *     <li>Grid snapping</li>
+     *     <li>Terrain interaction</li>
+     * </ul>
+     *
+     * @param screenX the X coordinate on the screen in pixels
+     * @param screenY the Y coordinate on the screen in pixels
+     * @return the world-space coordinates where the camera picking ray intersects
+     *         the plane at Y = 0
+     */
     public Vector3 getWorldCoordinates(int screenX, int screenY) {
         Ray pickRay = cameraController.getCamera().getPickRay(screenX, screenY);
         float t = (0 - pickRay.origin.y) / pickRay.direction.y;
