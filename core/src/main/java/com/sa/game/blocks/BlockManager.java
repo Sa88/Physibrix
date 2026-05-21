@@ -17,7 +17,7 @@ public class BlockManager {
     }
 
     public Block removeLastBlock() {
-        if (!blocks.isEmpty()) {
+        if (blocks.size() > 1) {
             return blocks.remove(blocks.size() - 1);
         }
         return null;
@@ -28,7 +28,9 @@ public class BlockManager {
     }
 
     public void clearBlocks() {
-        blocks.clear();
+        if(blocks.size() > 1) {
+            blocks.subList(1, blocks.size()).clear();
+        }
     }
 
     public boolean canPlaceBlock(Vector3 position, Model blockModel) {

@@ -34,7 +34,6 @@ public class World implements GameCommandListener, Disposable {
     private Environment environment;
     private Model baseModel;
     private btRigidBody baseBody;
-    private ModelInstance baseInstance;
     private GridRenderer gridRenderer;
     private boolean renderWarnings;
     private StabilityMonitor stabilityMonitor;
@@ -77,7 +76,7 @@ public class World implements GameCommandListener, Disposable {
 
     private void createBase() {
         baseModel = ModelFactory.createGroundModel();
-        baseInstance = new ModelInstance(baseModel);
+        var baseInstance = new ModelInstance(baseModel);
         baseInstance.transform.setToTranslation(0, -0.5f, 0);
 
         btCollisionShape baseShape = new btBoxShape(new Vector3(25f, 0.5f, 25f));
@@ -88,6 +87,9 @@ public class World implements GameCommandListener, Disposable {
         baseInfo.dispose();
 
         physicsSystem.addRigidBody(baseBody);
+
+        var baseBlock = new Block(BlockType.BASE, MaterialType.CONCRETE, baseInstance, baseBody);
+        blockManager.addBlock(baseBlock);
     }
 
     public void addBlock(Vector3 position, MaterialType currentMaterial, BlockType currentBlockType, BlockShapeType currentShapeType) {
@@ -149,9 +151,6 @@ public class World implements GameCommandListener, Disposable {
 
         modelBatch.begin(cameraController.getCamera());
 
-        // Render base
-        modelBatch.render(baseInstance, environment);
-
         dragHandler.update(modelBatch);
 
         for (Block block : blockManager.getBlocks()) {
@@ -180,7 +179,8 @@ public class World implements GameCommandListener, Disposable {
 
     public void clearBlocks() {
         physicsSystem.removeAllConstraints();
-        for (Block block : blockManager.getBlocks()) {
+        var blocksToRemove = blockManager.getBlocks().subList(1, blockManager.getBlocks().size());
+        for (Block block : blocksToRemove) {
             physicsSystem.removeRigidBody(block.getBody());
             block.getBody().dispose();
         }
