@@ -13,7 +13,7 @@ import java.util.List;
 public class WindSystem {
 
     private float windIntensity = 0f;
-    private float maxWindIntensity = 100f;
+    private float maxWindIntensity = 0f;
     private float windDuration = 0f;
     private float windElapsed = 0f;
     private boolean isWindActive = false;
@@ -82,7 +82,7 @@ public class WindSystem {
             float waveFalloff = (float) Math.exp(-distanceFromWave * distanceFromWave / (waveWidth * waveWidth));
 
             // Only apply force if block is in the wave
-            if (waveFalloff < 0.95f) {
+            if (waveFalloff < 0.01f) {
                 continue;
             }
 
@@ -128,5 +128,13 @@ public class WindSystem {
             return 0f;
         }
         return Math.max(0f, windDuration - windElapsed);
+    }
+
+    /**
+     * Returns the current wind direction
+     * @return 1f for positive X direction (East), -1f for negative X direction (West)
+     */
+    public float getWindDirection() {
+        return windDirection;
     }
 }

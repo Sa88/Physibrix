@@ -247,7 +247,7 @@ public class World implements GameCommandListener, Disposable {
         if(windSystem.isWindActive()) {
             windSystem.stopWind();
         }  else {
-            windSystem.startWind(5000, 10);
+            windSystem.startWind(500, 10);
         }
     }
     @Override
