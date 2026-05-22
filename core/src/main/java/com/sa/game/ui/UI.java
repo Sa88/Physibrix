@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -200,8 +201,11 @@ public class UI {
         return cancelButton;
     }
 
-    private ImageButton createMaterialButton(Texture texture, MaterialType type) {
-        ImageButton button = new ImageButton(new TextureRegionDrawable(new TextureRegion(texture)));
+    private ImageTextButton createMaterialButton(Texture texture, MaterialType type) {
+        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
+        style.imageUp = new TextureRegionDrawable(new TextureRegion(texture));
+        style.font = skin.getFont("subtitle");
+        ImageTextButton button = new ImageTextButton(type.name(), style);
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -240,7 +244,7 @@ public class UI {
                     selectionListener.onBlockSelected(currentMaterial, currentBlockType, currentShapeType);
                 }
             });
-            submenu.add(shapeButton).width(BUTTON_WIDTH).height(50).padLeft(PADDING).padBottom(PADDING);
+            submenu.add(shapeButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padLeft(PADDING).padBottom(PADDING);
         }
 
         parentTable.add(submenu).left().row();

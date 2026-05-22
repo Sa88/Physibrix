@@ -59,10 +59,10 @@ public class WindSystem {
         windIntensity = maxWindIntensity * intensityFactor;
 
         // Apply wind force to all blocks
-        applyWindForce(blocks, deltaTime);
+        applyWindForce(blocks);
     }
 
-    private void applyWindForce(List<Block> blocks, float deltaTime) {
+    private void applyWindForce(List<Block> blocks) {
         for (Block block : blocks) {
             btRigidBody body = block.getBody();
             if (body == null || body.isKinematicObject()) {
