@@ -10,10 +10,6 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class CameraControlUI {
     private Stage stage;
     private Skin skin;
-    private boolean moveUp;
-    private boolean moveDown;
-    private boolean moveLeft;
-    private boolean moveRight;
     private boolean zoomIn;
     private boolean zoomOut;
     private boolean rotateLeft;
@@ -28,10 +24,6 @@ public class CameraControlUI {
         table.bottom().right();
         table.setFillParent(true);
 
-        TextButton btnUp = new TextButton("UP", skin);
-        TextButton btnDown = new TextButton("DOWN", skin);
-        TextButton btnLeft = new TextButton("LEFT", skin);
-        TextButton btnRight = new TextButton("RIGHT", skin);
         TextButton btnZoomIn = new TextButton("-", skin);
         TextButton btnZoomOut = new TextButton("+", skin);
         TextButton btnRotateLeft = new TextButton("ROTATE LEFT", skin);
@@ -40,10 +32,6 @@ public class CameraControlUI {
 
 
         // Listeners para pressionar e soltar
-        addHoldListener(btnUp, () -> moveUp = true, () -> moveUp = false);
-        addHoldListener(btnDown, () -> moveDown = true, () -> moveDown = false);
-        addHoldListener(btnLeft, () -> moveLeft = true, () -> moveLeft = false);
-        addHoldListener(btnRight, () -> moveRight = true, () -> moveRight = false);
         addHoldListener(btnZoomIn, () -> zoomIn = true, () -> zoomIn = false);
         addHoldListener(btnZoomOut, () -> zoomOut = true, () -> zoomOut = false);
         addHoldListener(btnRotateLeft, () -> rotateLeft = true, () -> rotateLeft = false);
@@ -51,14 +39,6 @@ public class CameraControlUI {
 
         // Layout dos botões
         table.add().colspan(3);
-        table.row();
-        table.add().width(100);
-        table.add(btnUp).width(100).height(100);
-        table.add().width(100);
-        table.row();
-        table.add(btnLeft).width(100).height(100);
-        table.add(btnDown).width(100).height(100);
-        table.add(btnRight).width(100).height(100);
         table.row();
         table.add(btnZoomIn).width(100).height(100);
         table.add(btnZoomOut).width(100).height(100);
@@ -104,10 +84,6 @@ public class CameraControlUI {
 
 
     public void render(CameraController cameraController) {
-        if (moveUp) cameraController.move(0, 0, -1);
-        if (moveDown) cameraController.move(0, 0, 1);
-        if (moveLeft) cameraController.move(-1, 0, 0);
-        if (moveRight) cameraController.move(1, 0, 0);
         if (zoomIn) cameraController.zoom(-1);
         if (zoomOut) cameraController.zoom(1);
         if (rotateLeft) cameraController.rotate(-1);

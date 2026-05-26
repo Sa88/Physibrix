@@ -24,17 +24,6 @@ public class CameraController {
         return camera;
     }
 
-    public void move(float dx, float dy, float dz) {
-        float moveSpeed = 10f;
-        Vector3 direction = new Vector3(dx, dy, dz).nor().scl(moveSpeed * Gdx.graphics.getDeltaTime());
-
-        if(camera.position.x + dx > -40f && camera.position.x + dx < 40f && camera.position.z + dz > -40f && camera.position.z + dz < 40f) {
-            camera.position.add(direction);
-            camera.update();
-        }
-
-    }
-
     public void zoom(float amount) {
 
         Vector3 direction = new Vector3(camera.direction).nor();
