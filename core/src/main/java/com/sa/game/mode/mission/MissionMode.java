@@ -12,7 +12,7 @@ public class MissionMode implements GameMode {
     public void update(float deltaTime) {
         // verificar progresso
         if (currentMission != null && currentMission.isCompleted()) {
-            // mostrar mensagem de vitória
+            onModeEnded();
         }
     }
     @Override

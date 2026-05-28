@@ -11,17 +11,6 @@
     ]
   },
   {
-    "id": "long_bridge",
-    "name": "Construa uma Ponte",
-    "description": "Construa uma ponte com 20 blocos de comprimento.",
-    "goals" : [
-      {
-        "type": "length",
-        "value": 20
-      }
-    ]
-  },
-  {
     "id": "resist_wind",
     "name": "Resista ao Vento",
     "description": "Construa uma estrutura que resista a ventos de 50km/h durante 10 segundos.",

@@ -45,7 +45,6 @@ public class MissionLoader {
     private static MissionGoal createGoalFromData(World world, MissionDataGoal data) {
         return switch (data.type) {
             case "height" -> new BuildHeightGoal(world, data.value);
-            case "length" -> new BuildLenghtGoal(world, data.value);
             case "wind_resistance" -> new WindResistanceGoal(world, data.value, data.duration);
             default -> throw new IllegalArgumentException("Cannot find mission goal type: " + data.type);
         };

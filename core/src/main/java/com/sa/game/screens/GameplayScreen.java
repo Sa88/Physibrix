@@ -52,7 +52,9 @@ public class GameplayScreen extends ScreenAdapter {
     @Override
     public void show() {
 
-        world = new World();
+        if (world == null) {
+            world = new World();
+        }
         dragHandler = new DragHandler(world);
         ui = new UI(dragHandler, world);
         cameraControlUI = new CameraControlUI();

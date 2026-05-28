@@ -51,7 +51,16 @@ public class WindResistanceGoal extends AbstractMissionGoal {
         return !structureCollapsed;
     }
 
-
+    @Override
+    public String getCurrentStatus() {
+        if (failed) return "Structure collapsed ❌";
+        if (completed) return "Wind test survived ✓";
+        if (windSystem != null && windSystem.isWindActive()) {
+            float remaining = windSystem.getTimeRemaining();
+            return String.format("Testing... %.1fs remaining", remaining);
+        }
+        return "Ready to start...";
+    }
 
     public void notifyStructureFailure() {
         structureCollapsed = true;
