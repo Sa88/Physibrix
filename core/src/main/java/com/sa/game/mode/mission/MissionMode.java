@@ -4,33 +4,14 @@ import com.sa.game.mode.GameMode;
 public class MissionMode implements GameMode {
     private Mission currentMission;
 
-
-
     public void startMission(Mission mission) {
         this.currentMission = mission;
         // carregar mapa, objetivos e restrições
     }
 
-    @Override
-    public void onModeStarted() {
-
-    }
-    @Override
-    public void onModePaused() {
-
-    }
-    @Override
-    public void onModeResumed() {
-
-    }
-    @Override
-    public void onModeEnded() {
-
-    }
-
     public void update(float deltaTime) {
         // verificar progresso
-        if (currentMission.isCompleted()) {
+        if (currentMission != null && currentMission.isCompleted()) {
             // mostrar mensagem de vitória
         }
     }

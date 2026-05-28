@@ -3,22 +3,6 @@ import com.sa.game.blocks.Block;
 import com.sa.game.mode.GameMode;
 public class CreativeMode implements GameMode {
 
-    @Override
-    public void onModeStarted() {
-
-    }
-    @Override
-    public void onModePaused() {
-
-    }
-    @Override
-    public void onModeResumed() {
-
-    }
-    @Override
-    public void onModeEnded() {
-
-    }
 
     @Override
     public void update(float deltaTime) {

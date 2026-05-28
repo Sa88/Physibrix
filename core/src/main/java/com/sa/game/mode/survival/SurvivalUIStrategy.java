@@ -10,7 +10,7 @@ import com.sa.game.ui.UI;
 public class SurvivalUIStrategy implements GameModeUIStrategy {
     private Label survivalTimeLabel;
     private Label waveLabel;
-
+    private float elapsedTime = 0f;
 
 
     @Override
@@ -25,6 +25,8 @@ public class SurvivalUIStrategy implements GameModeUIStrategy {
     @Override
     public void render(float delta) {
         // Update and render survival-specific HUD
+        elapsedTime += delta;
+        survivalTimeLabel.setText(String.format("Time: %.0fs", elapsedTime));
     }
 
     @Override

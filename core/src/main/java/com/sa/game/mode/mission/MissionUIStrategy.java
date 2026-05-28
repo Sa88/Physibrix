@@ -26,25 +26,31 @@ public class MissionUIStrategy implements GameModeUIStrategy {
     public void initialize(World world, UI ui) {
         Skin skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
+        // Create a container table
+        Table missionPanel = new Table();
+        missionPanel.top().left();
+        missionPanel.setFillParent(true);
+        missionPanel.pad(10);
+
         overallProgressLabel = new Label("Mission Progress", skin);
-        overallProgressLabel.setFillParent(true);
         overallProgressBar = new ProgressBar(0, 100, 1, false, skin);
-        overallProgressBar.setFillParent(true);
+
+        // Add to panel instead of directly
+        missionPanel.add(overallProgressLabel).row();
+        missionPanel.add(overallProgressBar).width(200).row();
 
         goalsTable = new Table();
-        goalsTable.top().center();
-        goalsTable.setFillParent(true);
+        goalsTable.top().left();
+        goalsTable.pad(10);
 
-        // Create UI for each goal
         for (MissionGoal goal : mission.getGoals()) {
             Label goalLabel = new Label(goal.getGoalDescription(), skin);
             goalLabels.add(goalLabel);
             goalsTable.add(goalLabel).row();
         }
 
-        ui.getStage().addActor(overallProgressLabel);
-        ui.getStage().addActor(overallProgressBar);
-        ui.getStage().addActor(goalsTable);
+        missionPanel.add(goalsTable).row();
+        ui.getStage().addActor(missionPanel);
     }
 
     @Override
