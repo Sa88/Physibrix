@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.sa.game.Main;
+import com.sa.game.World;
 import com.sa.game.assets.Assets;
 import com.sa.game.assets.TextureType;
 import com.sa.game.mode.GameModeManager;
@@ -22,7 +23,11 @@ public class ModeSelectionScreen extends ScreenAdapter {
     private final GameModeManager gameModeManager;
     private final SpriteBatch spriteBatch;
 
+    private final World world;
+
     public ModeSelectionScreen(Main game) {
+
+        world = new World();
 
         spriteBatch = new SpriteBatch();
 
@@ -46,11 +51,11 @@ public class ModeSelectionScreen extends ScreenAdapter {
         gameModeUI.setStartButtonListener(() -> {
             GameModeType selectedMode = gameModeUI.getSelectedMode();
             switch (selectedMode) {
-                case CREATIVE: game.setScreen(new GameplayScreen(game));
+                case CREATIVE: game.setScreen(new GameplayScreen(game, gameModeManager.getCurrentMode(), world));
                     break;
-                case MISSION: game.setScreen(new MissionSelectScreen(game, gameModeManager.getCurrentMode(), skin));
+                case MISSION: game.setScreen(new MissionSelectScreen(game, gameModeManager.getCurrentMode(), skin, world));
                     break;
-                case SURVIVAL: game.setScreen(new GameplayScreen(game));
+                case SURVIVAL: game.setScreen(new GameplayScreen(game, gameModeManager.getCurrentMode(), world));
                 break;
             }
         });

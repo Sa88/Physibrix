@@ -34,8 +34,8 @@ import static com.sa.game.MaterialType.STONE;
 import static com.sa.game.MaterialType.WOOD;
 
 public class UI {
-    private Stage stage;
-    private Skin skin;
+    private final Stage stage;
+    private final Skin skin;
     private MaterialType currentMaterial = CONCRETE;
     private BlockType currentBlockType = BASE;
     private BlockShapeType currentShapeType = BOX;

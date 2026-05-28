@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.sa.game.World;
 import com.sa.game.assets.TextureType;
 import com.sa.game.mode.mission.Mission;
 import com.sa.game.mode.mission.MissionLoader;
@@ -30,12 +31,15 @@ public class MissionSelectScreen extends ScreenAdapter {
     private final Skin skin;
     private final SpriteBatch spriteBatch;
 
-    public MissionSelectScreen(Main main, GameMode gameMode, Skin skin) {
+    private final World world;
+
+    public MissionSelectScreen(Main main, GameMode gameMode, Skin skin, World world) {
         this.main = main;
         this.stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         this.missionMode = (MissionMode) gameMode;
         this.skin = skin;
         this.spriteBatch = new SpriteBatch();
+        this.world = world;
     }
 
     @Override
@@ -66,8 +70,9 @@ public class MissionSelectScreen extends ScreenAdapter {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    missionMode.startMission(mission);
-                    main.setScreen(new GameplayScreen(main, mission));
+                    Mission fullMission = MissionLoader.loadMission(world, mission.getId());
+                    missionMode.startMission(fullMission);
+                    main.setScreen(new GameplayScreen(main, missionMode, world));
                 }
             });
             table.add(button).width(80f).height(80f).row();

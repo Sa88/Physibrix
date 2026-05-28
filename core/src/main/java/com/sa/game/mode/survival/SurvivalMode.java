@@ -6,6 +6,22 @@ public class SurvivalMode implements GameMode {
     private float survivalTime = 0;
 
     @Override
+    public void onModeStarted() {
+
+    }
+    @Override
+    public void onModePaused() {
+
+    }
+    @Override
+    public void onModeResumed() {
+
+    }
+    @Override
+    public void onModeEnded() {
+
+    }
+    @Override
     public void update(float deltaTime) {
         survivalTime += deltaTime;
         // Pode incluir lógica de eventos aleatórios aqui

@@ -2,6 +2,11 @@ package com.sa.game.mode;
 import com.sa.game.blocks.Block;
 public interface GameMode {
 
+    void onModeStarted();  // Called when mode begins
+    void onModePaused();
+    void onModeResumed();
+    void onModeEnded();
+
     // Chamado todo frame para atualizações específicas do modo
     void update(float deltaTime);
 

@@ -7,9 +7,7 @@ import com.sa.game.physics.WindSystem;
  * WindResistanceGoal tests if a structure can withstand wind forces.
  * The goal is reached if the structure survives the specified wind intensity and duration.
  */
-public class WindResistanceGoal implements MissionGoal {
-
-    private final World world;
+public class WindResistanceGoal extends AbstractMissionGoal {
     private final int windValue;
     private final int windDuration;
     private WindSystem windSystem;
@@ -17,11 +15,19 @@ public class WindResistanceGoal implements MissionGoal {
     private boolean structureCollapsed = false;
 
     public WindResistanceGoal(World world, int value, int duration) {
-        this.world = world;
+        super(world);
         this.windValue = value;
         this.windDuration = duration;
     }
 
+    @Override
+    public String getGoalDescription() {
+        return "Construa uma estrutura que resista a ventos de "+ windValue + "km/h durante " + windDuration + " segundos.";
+    }
+    @Override
+    public String getGoalType() {
+        return "wind_resistance";
+    }
     @Override
     public boolean isGoalReached() {
         // Lazy initialization of wind system
@@ -44,6 +50,8 @@ public class WindResistanceGoal implements MissionGoal {
         // Wind test is complete - goal reached if structure didn't collapse
         return !structureCollapsed;
     }
+
+
 
     public void notifyStructureFailure() {
         structureCollapsed = true;

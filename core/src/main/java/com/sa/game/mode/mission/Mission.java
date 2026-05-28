@@ -25,4 +25,7 @@ public class Mission {
         }
         return true;
     }
+    public float getOverallProgress() {
+        return (float) goals.stream().mapToDouble(MissionGoal::getProgress).average().orElse(0);
+    }
 }
