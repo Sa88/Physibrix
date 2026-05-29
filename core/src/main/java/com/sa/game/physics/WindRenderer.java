@@ -48,7 +48,7 @@ public class WindRenderer {
 
         shapeRenderer.setProjectionMatrix(camera.combined);
 
-        float waveCenter = (windSystem.getWindProgress() * 50f) - 25f;
+        float waveCenter = ((windSystem.getWindProgress() * 50f) - 25f) * windSystem.getWindDirection();
         float intensity = windSystem.getCurrentWindIntensity() / windSystem.getMaxWindIntensity();
 
         // Layer 1: Draw base pressure gradient (low alpha)
