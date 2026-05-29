@@ -47,7 +47,7 @@ public class PhysicsSystem implements Disposable {
         debugDrawer = new DebugDrawer();
         debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
         dynamicsWorld.setDebugDrawer(debugDrawer);
-        constraintList = new ArrayList<btTypedConstraint>();
+        constraintList = new ArrayList<>();
     }
 
     public void update(float delta) {
@@ -66,35 +66,6 @@ public class PhysicsSystem implements Disposable {
 
     public void removeRigidBody(btRigidBody rigidBody) {
         dynamicsWorld.removeRigidBody(rigidBody);
-    }
-
-    public void addCollisionObject(btCollisionObject collisionObject) {
-        dynamicsWorld.addCollisionObject(collisionObject);
-    }
-
-    public void removeCollisionObject(btCollisionObject collisionObject) {
-        dynamicsWorld.removeCollisionObject(collisionObject);
-    }
-
-    public void addConstraint(Block blockA, Block blockB) {
-        btRigidBody bodyA = blockA.getBody();
-        btRigidBody bodyB = blockB.getBody();
-
-        // Obter as transformações globais
-        Matrix4 matrixA = blockA.getModelInstance().transform;
-        Matrix4 matrixB = blockB.getModelInstance().transform;
-
-        // Calcular as transformações relativas
-        Matrix4 frameInA = new Matrix4().idt(); // Identidade se blocos estiverem alinhados
-        Matrix4 inverseA = new Matrix4(matrixA).inv(); // inversa de A
-        Matrix4 frameInB = new Matrix4(inverseA).mul(matrixB); // transform B relativo a A
-
-        // Criar a constraint
-        btFixedConstraint constraint = new btFixedConstraint(bodyA, bodyB, frameInA, frameInB);
-        constraint.setBreakingImpulseThreshold(1e8f);
-
-        dynamicsWorld.addConstraint(constraint, true);
-        constraintList.add(constraint);
     }
 
     public boolean connectIfTouching(Block blockA, Block blockB) {
