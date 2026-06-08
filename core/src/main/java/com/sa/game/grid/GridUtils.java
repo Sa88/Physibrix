@@ -36,7 +36,9 @@ public class GridUtils {
 
         var roundedVector = roundVector(position,CELL_SIZE, 0.001f);
 
-        float snappedY = Math.round(roundedVector.y / fullHeight) * fullHeight + halfExtents.y;
+        //float snappedY = Math.round(roundedVector.y / fullHeight) * fullHeight + halfExtents.y;
+
+        float snappedY = position.y;
 
         return new Vector3(roundedVector.x, snappedY, roundedVector.z);
     }

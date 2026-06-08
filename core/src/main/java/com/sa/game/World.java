@@ -147,7 +147,7 @@ public class World implements GameCommandListener, Disposable {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         cameraController.update(deltaTime);
 
-        physicsSystem.update(deltaTime);
+        //physicsSystem.update(deltaTime);
 
         modelBatch.begin(cameraController.getCamera());
 
@@ -164,9 +164,13 @@ public class World implements GameCommandListener, Disposable {
 
         gridRenderer.render(cameraController.getCamera());
 
+        stabilityMonitor.setRenderForces(renderWarnings);
         stabilityMonitor.update(deltaTime, physicsSystem.getDispatcher());
+
         if(renderWarnings) {
+            physicsSystem.update(deltaTime);
             stabilityMonitor.renderWarnings(warningBatch, cameraController.getCamera());
+            stabilityMonitor.renderForces(cameraController.getCamera());
         }
 
         // Update wind effects
@@ -185,7 +189,7 @@ public class World implements GameCommandListener, Disposable {
             block.getBody().dispose();
         }
         blockManager.clearBlocks();
-        stabilityMonitor.dispose();
+        stabilityMonitor.clear();
         ModelFactory.disposeAllModels();
         windSystem.stopWind();
     }

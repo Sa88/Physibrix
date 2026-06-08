@@ -23,7 +23,7 @@ public class WorldUtils {
         float maxZ = blockPos.z + blockBox.max.z + blockBox2.max.z;
 
         // Verifica se o ponto (x, z) está dentro da área
-        return (x >= minX && x <= maxX) && (z >= minZ && z <= maxZ);
+        return (x > minX && x < maxX) && (z > minZ && z < maxZ);
     }
 
     public static float getHeightAt(World world, float x, float z, Block tempBlock) {
