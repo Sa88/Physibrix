@@ -1,6 +1,8 @@
 package com.sa.game.mode.mission.goals;
 import com.sa.game.World;
 import com.sa.game.WorldUtils;
+
+import java.util.Locale;
 public class BuildHeightGoal extends AbstractMissionGoal {
     private final int requiredHeight;
 
@@ -11,7 +13,7 @@ public class BuildHeightGoal extends AbstractMissionGoal {
 
     @Override
     public String getGoalDescription() {
-        return "Construa uma torre com pelo menos " + requiredHeight + " blocos de altura.";
+        return "Build a tower at least with " + requiredHeight + "m height.";
     }
     @Override
     public String getGoalType() {
@@ -34,6 +36,6 @@ public class BuildHeightGoal extends AbstractMissionGoal {
         if (completed) return "Completed ✓";
         if (failed) return "Failed ❌";
         float current = WorldUtils.getMaxBlockHeight(world);
-        return String.format("%.1f / %d blocos", current, requiredHeight);
+        return String.format(Locale.ENGLISH, "%.1f / %d blocks", current, requiredHeight);
     }
 }

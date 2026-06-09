@@ -2,7 +2,7 @@
   {
     "id": "tower_building",
     "name": "Construa uma Torre",
-    "description": "Construa uma torre com pelo menos 10 blocos de altura.",
+    "description": "Construa uma torre com pelo menos 20m de altura.",
     "goals" : [
       {
         "type": "height",
