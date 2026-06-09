@@ -30,7 +30,7 @@ public class MissionUIStrategy implements GameModeUIStrategy {
         Table missionPanel = new Table();
         missionPanel.top().left();
         missionPanel.setFillParent(true);
-        missionPanel.pad(10);
+        missionPanel.pad(50);
 
         overallProgressLabel = new Label("Mission Progress", skin);
         overallProgressBar = new ProgressBar(0, 100, 1, false, skin);
@@ -41,7 +41,7 @@ public class MissionUIStrategy implements GameModeUIStrategy {
 
         goalsTable = new Table();
         goalsTable.top().left();
-        goalsTable.pad(10);
+        goalsTable.pad(50);
 
         for (MissionGoal goal : mission.getGoals()) {
             Label goalLabel = new Label(goal.getGoalDescription(), skin);

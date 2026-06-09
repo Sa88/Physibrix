@@ -36,6 +36,6 @@ public class BuildHeightGoal extends AbstractMissionGoal {
         if (completed) return "Completed ✓";
         if (failed) return "Failed ❌";
         float current = WorldUtils.getMaxBlockHeight(world);
-        return String.format(Locale.ENGLISH, "%.1f / %d blocks", current, requiredHeight);
+        return String.format(Locale.ENGLISH, "%.1f / %d m", current, requiredHeight);
     }
 }
