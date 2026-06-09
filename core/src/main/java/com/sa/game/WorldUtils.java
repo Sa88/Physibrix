@@ -8,7 +8,15 @@ import com.sa.game.grid.GridUtils;
 public class WorldUtils {
 
     public static float getMaxBlockHeight(World world) {
-        return world.getBlockManager().getBlocks().stream().map(b -> b.getBoundingBox().getHeight()).max(Float::compareTo).orElse(0f);
+
+        return (float) world.getBlockManager().getBlocks().stream()
+            .mapToDouble(b -> {
+                Vector3 pos = b.getModelInstance().transform.getTranslation(new Vector3());
+                float height = b.getBoundingBox().getHeight();
+                return pos.y + height / 2f;
+            })
+            .max()
+            .orElse(0f);
     }
 
     public static Vector3 getSnappedWorldCoordinates(World world, int screenX, int screenY, BlockType blockType) {
