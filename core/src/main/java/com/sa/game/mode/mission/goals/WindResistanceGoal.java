@@ -22,7 +22,7 @@ public class WindResistanceGoal extends AbstractMissionGoal {
 
     @Override
     public String getGoalDescription() {
-        return "Construa uma estrutura que resista a ventos de "+ windValue + "km/h durante " + windDuration + " segundos.";
+        return "Build a structure that resist to wind of "+ windValue + "km/h during " + windDuration + " seconds.";
     }
     @Override
     public String getGoalType() {
